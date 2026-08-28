@@ -1,0 +1,39 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>SellMate</h1>
+    <h2>Anmelden</h2>
+
+    <form (ngSubmit)="login()">
+      <label for="email">E-Mail</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        autocomplete="email"
+      />
+
+      <label for="password">Passwort</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        autocomplete="current-password"
+      />
+
+      @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+      }
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Anmeldung...' : 'Anmelden' }}
+      </button>
+    </form>
+
+    <p>
+      Noch kein Konto?
+      <a routerLink="/register">Registrieren</a>
+    </p>
+  </div>
+</div>
