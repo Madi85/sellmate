@@ -1,0 +1,141 @@
+<div class="page-header">
+  <div>
+    <h1>Artikel hinzufügen</h1>
+    <p>Erstelle einen neuen Artikel für deinen Verkauf.</p>
+  </div>
+</div>
+
+<div class="article-form-card">
+
+  <form (ngSubmit)="saveArticle()">
+
+    <div class="field">
+      <label for="title">Titel *</label>
+
+      <input
+        id="title"
+        name="title"
+        type="text"
+        [(ngModel)]="title"
+        placeholder="z. B. Nike Kinderschuhe"
+      />
+    </div>
+
+    <div class="field">
+      <label for="description">Beschreibung</label>
+
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="description"
+        rows="5"
+        placeholder="Beschreibung des Artikels"
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+
+      <div class="field">
+        <label for="category">Kategorie</label>
+
+        <select
+          id="category"
+          name="category"
+          [(ngModel)]="category"
+        >
+          <option value="">Bitte wählen</option>
+          <option value="clothing">Kleidung</option>
+          <option value="shoes">Schuhe</option>
+          <option value="accessories">Accessoires</option>
+          <option value="toys">Spielzeug</option>
+          <option value="home">Haushalt</option>
+          <option value="other">Andere</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="condition">Zustand</label>
+
+        <select
+          id="condition"
+          name="condition"
+          [(ngModel)]="condition"
+        >
+          <option value="">Bitte wählen</option>
+          <option value="new">Neu</option>
+          <option value="like_new">Wie neu</option>
+          <option value="very_good">Sehr gut</option>
+          <option value="good">Gut</option>
+          <option value="satisfactory">Zufriedenstellend</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-row">
+
+      <div class="field">
+        <label for="brand">Marke</label>
+
+        <input
+          id="brand"
+          name="brand"
+          type="text"
+          [(ngModel)]="brand"
+          placeholder="z. B. Nike"
+        />
+      </div>
+
+      <div class="field">
+        <label for="size">Größe</label>
+
+        <input
+          id="size"
+          name="size"
+          type="text"
+          [(ngModel)]="size"
+          placeholder="z. B. 25"
+        />
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label for="purchasePrice">Einkaufspreis</label>
+
+      <input
+        id="purchasePrice"
+        name="purchasePrice"
+        type="number"
+        min="0"
+        step="0.01"
+        [(ngModel)]="purchasePrice"
+        placeholder="0,00"
+      />
+    </div>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    <div class="actions">
+      <button
+        type="button"
+        class="secondary"
+        (click)="cancel()"
+      >
+        Abbrechen
+      </button>
+
+      <button
+        type="submit"
+        class="primary"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Wird gespeichert...' : 'Artikel speichern' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

@@ -19,7 +19,7 @@ export class Login {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {}
+  ) { }
 
   async login() {
     this.errorMessage = '';
@@ -43,6 +43,6 @@ export class Login {
       return;
     }
 
-    await this.router.navigate(['/']);
+    await this.router.navigate(['/dashboard']);
   }
 }

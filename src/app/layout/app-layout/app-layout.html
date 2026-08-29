@@ -1,0 +1,18 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <h1>SellMate</h1>
+
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Übersicht</a>
+      <a routerLink="/articles" routerLinkActive="active">Artikel</a>
+      <a routerLink="/articles/new" routerLinkActive="active">+ Artikel</a>
+      <a routerLink="/statistics" routerLinkActive="active">Statistik</a>
+    </nav>
+
+    <button (click)="logout()">Abmelden</button>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

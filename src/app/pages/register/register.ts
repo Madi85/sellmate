@@ -21,7 +21,7 @@ export class Register {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {}
+  ) { }
 
   async register() {
     this.errorMessage = '';
@@ -39,24 +39,37 @@ export class Register {
 
     this.loading = true;
 
-    const { data, error } = await this.supabaseService.signUp(
-      this.email,
-      this.password,
-      this.displayName
-    );
+    try {
+      const { data, error } = await this.supabaseService.signUp(
+        this.email,
+        this.password,
+        this.displayName
+      );
 
-    this.loading = false;
+      
 
-    if (error) {
-      this.errorMessage = error.message;
-      return;
-    }
+      if (error) {
+        if (error.message.toLowerCase().includes('email address') &&
+          error.message.toLowerCase().includes('invalid')) {
+          this.errorMessage = 'Bitte gib eine gültige E-Mail-Adresse ein.';
+        } else {
+          this.errorMessage = error.message;
+        }
 
-    if (data.session) {
-      await this.router.navigate(['/']);
-    } else {
-      this.successMessage =
-        'Registrierung erfolgreich. Bitte bestätige deine E-Mail.';
+        return;
+      }
+
+      if (data.session) {
+       await this.router.navigate(['/dashboard']);
+      } else {
+        this.successMessage =
+          'Registrierung erfolgreich. Bitte bestätige deine E-Mail.';
+      }
+    } catch (err) {
+     
+      this.errorMessage = 'Registrierung konnte nicht abgeschlossen werden.';
+    } finally {
+      this.loading = false;
     }
   }
 }

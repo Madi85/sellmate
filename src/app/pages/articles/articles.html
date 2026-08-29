@@ -1,0 +1,90 @@
+<div class="page-header">
+  <div>
+    <h1>Artikel</h1>
+    <p>Verwalte deine Verkaufsartikel.</p>
+  </div>
+
+  <a routerLink="/articles/new" class="add-button">
+    + Artikel hinzufügen
+  </a>
+</div>
+
+@if (errorMessage()) {
+  <p class="error">
+    {{ errorMessage() }}
+  </p>
+}
+
+@if (loading()) {
+
+  <p>Artikel werden geladen...</p>
+
+} @else {
+
+  @if (articles().length === 0) {
+
+    <div class="empty-state">
+      <h2>Noch keine Artikel</h2>
+
+      <p>
+        Erstelle deinen ersten Verkaufsartikel.
+      </p>
+
+      <a routerLink="/articles/new">
+        Ersten Artikel hinzufügen
+      </a>
+    </div>
+
+  } @else {
+
+    <div class="article-grid">
+
+      @for (article of articles(); track article.id) {
+
+        <div class="article-card">
+
+          <div class="image-placeholder">
+            Kein Foto
+          </div>
+
+          <div class="article-content">
+
+            <div class="status">
+              {{ article.status }}
+            </div>
+
+            <h2>{{ article.title }}</h2>
+
+            <div class="details">
+
+              @if (article.brand) {
+                <span>
+                  {{ article.brand }}
+                </span>
+              }
+
+              @if (article.size) {
+                <span>
+                  Größe {{ article.size }}
+                </span>
+              }
+
+              <span>
+                {{ getConditionLabel(article.condition) }}
+              </span>
+
+            </div>
+
+            <div class="price">
+              Einkauf:
+              {{ formatPrice(article.purchase_price_cents) }}
+            </div>
+
+          </div>
+        </div>
+
+      }
+
+    </div>
+  }
+}
