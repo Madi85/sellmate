@@ -41,7 +41,7 @@
 
   @for (article of articles(); track article.id) {
 
-  <div class="article-card">
+  <a class="article-card" [routerLink]="['/articles', article.id]">
 
     @if (article.coverUrl) {
 
@@ -68,15 +68,11 @@
       <div class="details">
 
         @if (article.brand) {
-        <span>
-          {{ article.brand }}
-        </span>
+        <span>{{ article.brand }}</span>
         }
 
         @if (article.size) {
-        <span>
-          Größe {{ article.size }}
-        </span>
+        <span>Größe {{ article.size }}</span>
         }
 
         <span>
@@ -91,7 +87,8 @@
       </div>
 
     </div>
-  </div>
+
+  </a>
 
   }
 

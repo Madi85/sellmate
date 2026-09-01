@@ -1,0 +1,126 @@
+<a routerLink="/articles" class="back-link">
+  ← Zurück zu Artikeln
+</a>
+
+
+@if (loading()) {
+
+<p>Artikel wird geladen...</p>
+
+} @else if (errorMessage()) {
+
+<p class="error">
+  {{ errorMessage() }}
+</p>
+
+} @else if (article(); as item) {
+
+<div class="article-detail">
+
+  <section class="gallery">
+
+    @if (selectedImageUrl()) {
+
+    <div class="main-image">
+
+      <img [src]="selectedImageUrl()" [alt]="item.title" />
+
+    </div>
+
+    @if (item.article_images.length > 1) {
+
+    <div class="thumbnails">
+
+      @for (
+      image of item.article_images;
+      track image.id
+      ) {
+
+      @if (image.url) {
+
+      <button type="button" class="thumbnail" [class.selected]="selectedImageUrl() === image.url"
+        (click)="selectImage(image.url)">
+
+        <img [src]="image.url" [alt]="item.title" />
+
+      </button>
+
+      }
+
+      }
+
+    </div>
+
+    }
+
+    } @else {
+
+    <div class="no-image">
+      Kein Foto vorhanden
+    </div>
+
+    }
+
+  </section>
+
+  <section class="article-info">
+
+    <span class="status">
+      {{ item.status }}
+    </span>
+
+    <a [routerLink]="['/articles', item.id, 'edit']" class="edit-button">
+      Artikel bearbeiten
+    </a>
+    @if (item.description) {
+
+    <p class="description">
+      {{ item.description }}
+    </p>
+
+    }
+
+    <div class="properties">
+
+      @if (item.brand) {
+      <div>
+        <span>Marke</span>
+        <strong>{{ item.brand }}</strong>
+      </div>
+      }
+
+      @if (item.size) {
+      <div>
+        <span>Größe</span>
+        <strong>{{ item.size }}</strong>
+      </div>
+      }
+
+      @if (item.category) {
+      <div>
+        <span>Kategorie</span>
+        <strong>{{ item.category }}</strong>
+      </div>
+      }
+
+      @if (item.condition) {
+      <div>
+        <span>Zustand</span>
+        <strong>{{ item.condition }}</strong>
+      </div>
+      }
+
+      <div>
+        <span>Einkaufspreis</span>
+
+        <strong>
+          {{ formatPrice(item.purchase_price_cents) }}
+        </strong>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+}

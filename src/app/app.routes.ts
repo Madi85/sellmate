@@ -11,6 +11,10 @@ import { Statistics } from './pages/statistics/statistics';
 import { AppLayout } from './layout/app-layout/app-layout';
 import { authGuard } from './guards/auth-guard';
 
+import { ArticleDetail } from './pages/article-detail/article-detail';
+import { ArticleEdit } from './pages/article-edit/article-edit';
+
+
 export const routes: Routes = [
   {
     path: 'login',
@@ -21,33 +25,42 @@ export const routes: Routes = [
     component: Register
   },
   {
-  path: '',
-  component: AppLayout,
-  canActivate: [authGuard],
-  children: [
-    {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full'
-    },
-    {
-      path: 'dashboard',
-      component: Dashboard
-    },
-    {
-      path: 'articles/new',
-      component: ArticleCreate
-    },
-    {
-      path: 'articles',
-      component: Articles
-    },
-    {
-      path: 'statistics',
-      component: Statistics
-    }
-  ]
-},
+    path: '',
+    component: AppLayout,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: Dashboard
+      },
+
+      {
+        path: 'articles/new',
+        component: ArticleCreate
+      },
+      {
+        path: 'articles/:id/edit',
+        component: ArticleEdit
+      },
+      {
+        path: 'articles/:id',
+        component: ArticleDetail
+      },
+      {
+        path: 'articles',
+        component: Articles
+      },
+      {
+        path: 'statistics',
+        component: Statistics
+      }
+    ]
+  },
   {
     path: '**',
     redirectTo: 'dashboard'

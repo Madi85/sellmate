@@ -1,0 +1,129 @@
+.edit-card {
+  max-width: 900px;
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+
+  input,
+  textarea,
+  select {
+    padding: 11px 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font: inherit;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.image-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #eee;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+}
+
+.cover-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 12px;
+}
+
+.image-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+
+  button {
+    flex: 1;
+    cursor: pointer;
+  }
+}
+
+.remove-new {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.image-upload {
+  display: inline-block;
+  padding: 11px 16px;
+  border: 1px dashed #aaa;
+  border-radius: 7px;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+
+  .cancel {
+    color: #444;
+    text-decoration: none;
+  }
+
+  button {
+    padding: 11px 18px;
+    cursor: pointer;
+  }
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+.error {
+  color: #b00020;
+}
+
+@media (max-width: 700px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

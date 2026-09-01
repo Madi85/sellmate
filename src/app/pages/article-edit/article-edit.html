@@ -1,0 +1,217 @@
+<a
+  [routerLink]="['/articles', articleId]"
+  class="back-link"
+>
+  ← Zurück zum Artikel
+</a>
+
+@if (loading()) {
+
+  <p>Artikel wird geladen...</p>
+
+} @else {
+
+  <div class="edit-card">
+
+    <h1>Artikel bearbeiten</h1>
+
+    @if (errorMessage()) {
+      <p class="error">
+        {{ errorMessage() }}
+      </p>
+    }
+
+    <div class="field">
+      <label>Titel</label>
+
+      <input
+        type="text"
+        [(ngModel)]="title"
+      />
+    </div>
+
+    <div class="field">
+      <label>Beschreibung</label>
+
+      <textarea
+        rows="5"
+        [(ngModel)]="description"
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+
+      <div class="field">
+        <label>Kategorie</label>
+        <input [(ngModel)]="category" />
+      </div>
+
+      <div class="field">
+        <label>Marke</label>
+        <input [(ngModel)]="brand" />
+      </div>
+
+    </div>
+
+    <div class="form-row">
+
+      <div class="field">
+        <label>Größe</label>
+        <input [(ngModel)]="size" />
+      </div>
+
+      <div class="field">
+        <label>Zustand</label>
+
+        <select [(ngModel)]="condition">
+          <option value="">Bitte wählen</option>
+          <option value="new">Neu</option>
+          <option value="like_new">Wie neu</option>
+          <option value="very_good">Sehr gut</option>
+          <option value="good">Gut</option>
+          <option value="satisfactory">
+            Zufriedenstellend
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Einkaufspreis (€)</label>
+
+      <input
+        type="number"
+        step="0.01"
+        min="0"
+        [(ngModel)]="purchasePrice"
+      />
+    </div>
+
+    <h2>Bilder</h2>
+
+    @if (existingImages().length > 0) {
+
+      <div class="image-grid">
+
+        @for (
+          image of existingImages();
+          track image.id
+        ) {
+
+          <div class="image-item">
+
+            @if (image.url) {
+              <img
+                [src]="image.url"
+                alt="Artikelbild"
+              />
+            }
+
+            @if (image.is_cover) {
+              <span class="cover-badge">
+                Titelbild
+              </span>
+            }
+
+            <div class="image-actions">
+
+              @if (!image.is_cover) {
+                <button
+                  type="button"
+                  (click)="setCoverImage(image)"
+                >
+                  Als Titelbild
+                </button>
+              }
+
+              <button
+                type="button"
+                class="delete"
+                (click)="deleteExistingImage(image)"
+              >
+                Löschen
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+    @if (newImages().length > 0) {
+
+      <h3>Neue Bilder</h3>
+
+      <div class="image-grid">
+
+        @for (
+          image of newImages();
+          track image.previewUrl;
+          let i = $index
+        ) {
+
+          <div class="image-item">
+
+            <img
+              [src]="image.previewUrl"
+              alt="Neues Artikelbild"
+            />
+
+            <button
+              type="button"
+              class="remove-new"
+              (click)="removeNewImage(i)"
+            >
+              ×
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+    <label class="image-upload">
+      + Weitere Bilder hinzufügen
+
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        (change)="onImagesSelected($event)"
+      />
+    </label>
+
+    <div class="actions">
+
+      <a
+        [routerLink]="['/articles', articleId]"
+        class="cancel"
+      >
+        Abbrechen
+      </a>
+
+      <button
+        type="button"
+        (click)="saveArticle()"
+        [disabled]="saving()"
+      >
+        @if (saving()) {
+          Speichern...
+        } @else {
+          Änderungen speichern
+        }
+      </button>
+
+    </div>
+
+  </div>
+
+}
