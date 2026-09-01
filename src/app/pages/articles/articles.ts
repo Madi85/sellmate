@@ -2,6 +2,12 @@ import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 
+type ArticleImage = {
+  storage_path: string;
+  is_cover: boolean;
+  sort_order: number;
+};
+
 type Article = {
   id: string;
   title: string;
@@ -11,8 +17,11 @@ type Article = {
   status: string;
   purchase_price_cents: number | null;
   created_at: string;
-};
 
+  article_images: ArticleImage[];
+
+  coverUrl?: string | null;
+};
 @Component({
   selector: 'app-articles',
   imports: [RouterLink],
@@ -27,7 +36,7 @@ export class Articles implements OnInit {
 
   constructor(
     private supabaseService: SupabaseService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadArticles();
@@ -41,15 +50,20 @@ export class Articles implements OnInit {
       const { data, error } = await this.supabaseService.client
         .from('articles')
         .select(`
-          id,
-          title,
-          brand,
-          size,
-          condition,
-          status,
-          purchase_price_cents,
-          created_at
-        `)
+        id,
+        title,
+        brand,
+        size,
+        condition,
+        status,
+        purchase_price_cents,
+        created_at,
+        article_images (
+          storage_path,
+          is_cover,
+          sort_order
+        )
+      `)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -57,9 +71,48 @@ export class Articles implements OnInit {
         return;
       }
 
-      this.articles.set(data ?? []);
+      const articles: Article[] = data ?? [];
+
+      for (const article of articles) {
+
+        const coverImage =
+          article.article_images
+            ?.sort((a, b) => a.sort_order - b.sort_order)
+            .find(image => image.is_cover)
+          ??
+          article.article_images?.[0];
+
+        if (!coverImage) {
+          article.coverUrl = null;
+          continue;
+        }
+
+        const { data: signedUrlData, error: signedUrlError } =
+          await this.supabaseService.client.storage
+            .from('article-images')
+            .createSignedUrl(
+              coverImage.storage_path,
+              60 * 60
+            );
+
+        if (signedUrlError) {
+          console.error(
+            'Cover konnte nicht geladen werden:',
+            signedUrlError
+          );
+
+          article.coverUrl = null;
+          continue;
+        }
+
+        article.coverUrl = signedUrlData.signedUrl;
+      }
+
+      this.articles.set(articles);
 
     } catch (error) {
+      console.error('Fehler beim Laden der Artikel:', error);
+
       this.errorMessage.set(
         'Artikel konnten nicht geladen werden.'
       );
@@ -68,7 +121,6 @@ export class Articles implements OnInit {
       this.loading.set(false);
     }
   }
-
   formatPrice(cents: number | null): string {
     if (cents === null) {
       return '–';

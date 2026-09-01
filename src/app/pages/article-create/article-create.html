@@ -5,6 +5,61 @@
   </div>
 </div>
 
+<div class="field">
+  <label>Fotos</label>
+
+  <label class="image-upload">
+    <span>+ Fotos auswählen</span>
+
+    <input
+      type="file"
+      accept="image/*"
+      multiple
+      (change)="onImagesSelected($event)"
+    />
+  </label>
+
+  <small>
+    Bis zu 10 Bilder. Das erste Bild wird als Titelbild verwendet.
+  </small>
+</div>
+
+@if (selectedImages.length > 0) {
+
+  <div class="image-preview-grid">
+
+    @for (
+      image of selectedImages;
+      track image.previewUrl;
+      let i = $index
+    ) {
+
+      <div class="image-preview">
+
+        <img
+          [src]="image.previewUrl"
+          alt="Artikelbild"
+        />
+
+        @if (i === 0) {
+          <span class="cover-badge">
+            Titelbild
+          </span>
+        }
+
+        <button
+          type="button"
+          class="remove-image"
+          (click)="removeImage(i)"
+        >
+          ×
+        </button>
+
+      </div>
+    }
+
+  </div>
+}
 <div class="article-form-card">
 
   <form (ngSubmit)="saveArticle()">

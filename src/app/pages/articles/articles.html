@@ -10,81 +10,91 @@
 </div>
 
 @if (errorMessage()) {
-  <p class="error">
-    {{ errorMessage() }}
-  </p>
+<p class="error">
+  {{ errorMessage() }}
+</p>
 }
 
 @if (loading()) {
 
-  <p>Artikel werden geladen...</p>
+<p>Artikel werden geladen...</p>
 
 } @else {
 
-  @if (articles().length === 0) {
+@if (articles().length === 0) {
 
-    <div class="empty-state">
-      <h2>Noch keine Artikel</h2>
+<div class="empty-state">
+  <h2>Noch keine Artikel</h2>
 
-      <p>
-        Erstelle deinen ersten Verkaufsartikel.
-      </p>
+  <p>
+    Erstelle deinen ersten Verkaufsartikel.
+  </p>
 
-      <a routerLink="/articles/new">
-        Ersten Artikel hinzufügen
-      </a>
+  <a routerLink="/articles/new">
+    Ersten Artikel hinzufügen
+  </a>
+</div>
+
+} @else {
+
+<div class="article-grid">
+
+  @for (article of articles(); track article.id) {
+
+  <div class="article-card">
+
+    @if (article.coverUrl) {
+
+    <div class="article-image">
+      <img [src]="article.coverUrl" [alt]="article.title" />
     </div>
 
-  } @else {
+    } @else {
 
-    <div class="article-grid">
+    <div class="image-placeholder">
+      Kein Foto
+    </div>
 
-      @for (article of articles(); track article.id) {
+    }
 
-        <div class="article-card">
+    <div class="article-content">
 
-          <div class="image-placeholder">
-            Kein Foto
-          </div>
+      <div class="status">
+        {{ article.status }}
+      </div>
 
-          <div class="article-content">
+      <h2>{{ article.title }}</h2>
 
-            <div class="status">
-              {{ article.status }}
-            </div>
+      <div class="details">
 
-            <h2>{{ article.title }}</h2>
+        @if (article.brand) {
+        <span>
+          {{ article.brand }}
+        </span>
+        }
 
-            <div class="details">
+        @if (article.size) {
+        <span>
+          Größe {{ article.size }}
+        </span>
+        }
 
-              @if (article.brand) {
-                <span>
-                  {{ article.brand }}
-                </span>
-              }
+        <span>
+          {{ getConditionLabel(article.condition) }}
+        </span>
 
-              @if (article.size) {
-                <span>
-                  Größe {{ article.size }}
-                </span>
-              }
+      </div>
 
-              <span>
-                {{ getConditionLabel(article.condition) }}
-              </span>
-
-            </div>
-
-            <div class="price">
-              Einkauf:
-              {{ formatPrice(article.purchase_price_cents) }}
-            </div>
-
-          </div>
-        </div>
-
-      }
+      <div class="price">
+        Einkauf:
+        {{ formatPrice(article.purchase_price_cents) }}
+      </div>
 
     </div>
+  </div>
+
   }
+
+</div>
+}
 }
