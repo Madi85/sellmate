@@ -1,0 +1,22 @@
+{
+  "articles": "Artikel",
+  "manageArticles": "Verwalte deine Verkaufsartikel.",
+  "addArticle": "+ Artikel hinzufügen",
+  "articlesLoading": "Artikel werden geladen...",
+  "noArticles": "Noch keine Artikel",
+  "createFirstArticle": "Erstelle deinen ersten Verkaufsartikel.",
+  "addFirstArticle": "Ersten Artikel hinzufügen",
+  "noPhoto": "Kein Foto",
+  "size": "Größe",
+  "purchase": "Einkauf",
+
+  "statusDraft": "Entwurf",
+  "statusPublished": "Veröffentlicht",
+  "statusSold": "Verkauft",
+
+  "conditionNew": "Neu",
+  "conditionLikeNew": "Wie neu",
+  "conditionVeryGood": "Sehr gut",
+  "conditionGood": "Gut",
+  "conditionSatisfactory": "Zufriedenstellend"
+}

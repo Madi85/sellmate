@@ -1,0 +1,22 @@
+{
+  "articles": "المنتجات",
+  "manageArticles": "إدارة المنتجات المعروضة للبيع.",
+  "addArticle": "+ إضافة منتج",
+  "articlesLoading": "جارٍ تحميل المنتجات...",
+  "noArticles": "لا توجد منتجات بعد",
+  "createFirstArticle": "أضف أول منتج للبيع.",
+  "addFirstArticle": "إضافة أول منتج",
+  "noPhoto": "لا توجد صورة",
+  "size": "المقاس",
+  "purchase": "سعر الشراء",
+
+  "statusDraft": "مسودة",
+  "statusPublished": "منشور",
+  "statusSold": "تم البيع",
+
+  "conditionNew": "جديد",
+  "conditionLikeNew": "كالجديد",
+  "conditionVeryGood": "جيد جداً",
+  "conditionGood": "جيد",
+  "conditionSatisfactory": "مقبول"
+}

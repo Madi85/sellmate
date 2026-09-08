@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
+import { TranslationService } from '../../services/translation';
 
 type ArticleImage = {
   storage_path: string;
@@ -35,7 +36,8 @@ export class Articles implements OnInit {
   errorMessage = signal('');
 
   constructor(
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private translationService: TranslationService
   ) { }
 
   ngOnInit(): void {
@@ -121,6 +123,9 @@ export class Articles implements OnInit {
       this.loading.set(false);
     }
   }
+  t(key: string): string {
+    return this.translationService.t(key);
+  }
   formatPrice(cents: number | null): string {
     if (cents === null) {
       return '–';
@@ -135,22 +140,38 @@ export class Articles implements OnInit {
   getConditionLabel(condition: string | null): string {
     switch (condition) {
       case 'new':
-        return 'Neu';
+        return this.t('conditionNew');
 
       case 'like_new':
-        return 'Wie neu';
+        return this.t('conditionLikeNew');
 
       case 'very_good':
-        return 'Sehr gut';
+        return this.t('conditionVeryGood');
 
       case 'good':
-        return 'Gut';
+        return this.t('conditionGood');
 
       case 'satisfactory':
-        return 'Zufriedenstellend';
+        return this.t('conditionSatisfactory');
 
       default:
         return '–';
+    }
+  }
+
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'draft':
+        return this.t('statusDraft');
+
+      case 'published':
+        return this.t('statusPublished');
+
+      case 'sold':
+        return this.t('statusSold');
+
+      default:
+        return status;
     }
   }
 }

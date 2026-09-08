@@ -1,0 +1,22 @@
+{
+  "articles": "Articles",
+  "manageArticles": "Manage your items for sale.",
+  "addArticle": "+ Add article",
+  "articlesLoading": "Loading articles...",
+  "noArticles": "No articles yet",
+  "createFirstArticle": "Create your first item for sale.",
+  "addFirstArticle": "Add first article",
+  "noPhoto": "No photo",
+  "size": "Size",
+  "purchase": "Purchase",
+
+  "statusDraft": "Draft",
+  "statusPublished": "Published",
+  "statusSold": "Sold",
+
+  "conditionNew": "New",
+  "conditionLikeNew": "Like new",
+  "conditionVeryGood": "Very good",
+  "conditionGood": "Good",
+  "conditionSatisfactory": "Satisfactory"
+}

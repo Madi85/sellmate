@@ -1,97 +1,106 @@
 <div class="page-header">
   <div>
-    <h1>Artikel</h1>
-    <p>Verwalte deine Verkaufsartikel.</p>
+    <h1>{{ t('articles') }}</h1>
+    <p>{{ t('manageArticles') }}</p>
   </div>
 
   <a routerLink="/articles/new" class="add-button">
-    + Artikel hinzufügen
+    {{ t('addArticle') }}
   </a>
 </div>
 
 @if (errorMessage()) {
-<p class="error">
-  {{ errorMessage() }}
-</p>
+  <p class="error">
+    {{ errorMessage() }}
+  </p>
 }
 
 @if (loading()) {
 
-<p>Artikel werden geladen...</p>
+  <p>{{ t('articlesLoading') }}</p>
 
 } @else {
 
-@if (articles().length === 0) {
+  @if (articles().length === 0) {
 
-<div class="empty-state">
-  <h2>Noch keine Artikel</h2>
+    <div class="empty-state">
+      <h2>{{ t('noArticles') }}</h2>
 
-  <p>
-    Erstelle deinen ersten Verkaufsartikel.
-  </p>
+      <p>
+        {{ t('createFirstArticle') }}
+      </p>
 
-  <a routerLink="/articles/new">
-    Ersten Artikel hinzufügen
-  </a>
-</div>
-
-} @else {
-
-<div class="article-grid">
-
-  @for (article of articles(); track article.id) {
-
-  <a class="article-card" [routerLink]="['/articles', article.id]">
-
-    @if (article.coverUrl) {
-
-    <div class="article-image">
-      <img [src]="article.coverUrl" [alt]="article.title" />
+      <a routerLink="/articles/new">
+        {{ t('addFirstArticle') }}
+      </a>
     </div>
 
-    } @else {
+  } @else {
 
-    <div class="image-placeholder">
-      Kein Foto
+    <div class="article-grid">
+
+      @for (article of articles(); track article.id) {
+
+        <a
+          class="article-card"
+          [routerLink]="['/articles', article.id]"
+        >
+
+          @if (article.coverUrl) {
+
+            <div class="article-image">
+              <img
+                [src]="article.coverUrl"
+                [alt]="article.title"
+              />
+            </div>
+
+          } @else {
+
+            <div class="image-placeholder">
+              {{ t('noPhoto') }}
+            </div>
+
+          }
+
+          <div class="article-content">
+
+            <div class="status">
+              {{ getStatusLabel(article.status) }}
+            </div>
+
+            <h2>{{ article.title }}</h2>
+
+            <div class="details">
+
+              @if (article.brand) {
+                <span>{{ article.brand }}</span>
+              }
+
+              @if (article.size) {
+                <span>
+                  {{ t('size') }} {{ article.size }}
+                </span>
+              }
+
+              <span>
+                {{ getConditionLabel(article.condition) }}
+              </span>
+
+            </div>
+
+            <div class="price">
+              {{ t('purchase') }}:
+              {{ formatPrice(article.purchase_price_cents) }}
+            </div>
+
+          </div>
+
+        </a>
+
+      }
+
     </div>
-
-    }
-
-    <div class="article-content">
-
-      <div class="status">
-        {{ article.status }}
-      </div>
-
-      <h2>{{ article.title }}</h2>
-
-      <div class="details">
-
-        @if (article.brand) {
-        <span>{{ article.brand }}</span>
-        }
-
-        @if (article.size) {
-        <span>Größe {{ article.size }}</span>
-        }
-
-        <span>
-          {{ getConditionLabel(article.condition) }}
-        </span>
-
-      </div>
-
-      <div class="price">
-        Einkauf:
-        {{ formatPrice(article.purchase_price_cents) }}
-      </div>
-
-    </div>
-
-  </a>
 
   }
-
-</div>
-}
 }
