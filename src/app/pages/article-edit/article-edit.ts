@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
+import { TranslationService } from '../../services/translation';
 
 type ExistingImage = {
   id: string;
@@ -44,7 +45,8 @@ export class ArticleEdit implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private translationService: TranslationService
   ) { }
 
   async ngOnInit() {
@@ -346,5 +348,8 @@ export class ArticleEdit implements OnInit {
     } finally {
       this.saving.set(false);
     }
+  }
+  t(key: string): string {
+    return this.translationService.t(key);
   }
 }

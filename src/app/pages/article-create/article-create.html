@@ -1,15 +1,15 @@
 <div class="page-header">
   <div>
-    <h1>Artikel hinzufügen</h1>
-    <p>Erstelle einen neuen Artikel für deinen Verkauf.</p>
+    <h1>{{ t('createArticleTitle') }}</h1>
+    <p>{{ t('createArticleSubtitle') }}</p>
   </div>
 </div>
 
 <div class="field">
-  <label>Fotos</label>
+  <label>{{ t('photos') }}</label>
 
   <label class="image-upload">
-    <span>+ Fotos auswählen</span>
+    <span>{{ t('selectPhotos') }}</span>
 
     <input
       type="file"
@@ -20,7 +20,7 @@
   </label>
 
   <small>
-    Bis zu 10 Bilder. Das erste Bild wird als Titelbild verwendet.
+    {{ t('photoHint') }}
   </small>
 </div>
 
@@ -38,12 +38,12 @@
 
         <img
           [src]="image.previewUrl"
-          alt="Artikelbild"
+          [alt]="t('articleImageAlt')"
         />
 
         @if (i === 0) {
           <span class="cover-badge">
-            Titelbild
+            {{ t('coverImage') }}
           </span>
         }
 
@@ -60,68 +60,77 @@
 
   </div>
 }
+
 <div class="article-form-card">
 
   <form (ngSubmit)="saveArticle()">
 
     <div class="field">
-      <label for="title">Titel *</label>
+      <label for="title">
+        {{ t('title') }} *
+      </label>
 
       <input
         id="title"
         name="title"
         type="text"
         [(ngModel)]="title"
-        placeholder="z. B. Nike Kinderschuhe"
+        [placeholder]="t('titlePlaceholder')"
       />
     </div>
 
     <div class="field">
-      <label for="description">Beschreibung</label>
+      <label for="description">
+        {{ t('description') }}
+      </label>
 
       <textarea
         id="description"
         name="description"
         [(ngModel)]="description"
         rows="5"
-        placeholder="Beschreibung des Artikels"
+        [placeholder]="t('descriptionPlaceholder')"
       ></textarea>
     </div>
 
     <div class="form-row">
 
       <div class="field">
-        <label for="category">Kategorie</label>
+        <label for="category">
+          {{ t('category') }}
+        </label>
 
         <select
           id="category"
           name="category"
           [(ngModel)]="category"
         >
-          <option value="">Bitte wählen</option>
-          <option value="clothing">Kleidung</option>
-          <option value="shoes">Schuhe</option>
-          <option value="accessories">Accessoires</option>
-          <option value="toys">Spielzeug</option>
-          <option value="home">Haushalt</option>
-          <option value="other">Andere</option>
+          <option value="">{{ t('pleaseSelect') }}</option>
+          <option value="clothing">{{ t('categoryClothing') }}</option>
+          <option value="shoes">{{ t('categoryShoes') }}</option>
+          <option value="accessories">{{ t('categoryAccessories') }}</option>
+          <option value="toys">{{ t('categoryToys') }}</option>
+          <option value="home">{{ t('categoryHome') }}</option>
+          <option value="other">{{ t('categoryOther') }}</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="condition">Zustand</label>
+        <label for="condition">
+          {{ t('condition') }}
+        </label>
 
         <select
           id="condition"
           name="condition"
           [(ngModel)]="condition"
         >
-          <option value="">Bitte wählen</option>
-          <option value="new">Neu</option>
-          <option value="like_new">Wie neu</option>
-          <option value="very_good">Sehr gut</option>
-          <option value="good">Gut</option>
-          <option value="satisfactory">Zufriedenstellend</option>
+          <option value="">{{ t('pleaseSelect') }}</option>
+          <option value="new">{{ t('conditionNew') }}</option>
+          <option value="like_new">{{ t('conditionLikeNew') }}</option>
+          <option value="very_good">{{ t('conditionVeryGood') }}</option>
+          <option value="good">{{ t('conditionGood') }}</option>
+          <option value="satisfactory">{{ t('conditionSatisfactory') }}</option>
         </select>
       </div>
 
@@ -130,33 +139,39 @@
     <div class="form-row">
 
       <div class="field">
-        <label for="brand">Marke</label>
+        <label for="brand">
+          {{ t('brand') }}
+        </label>
 
         <input
           id="brand"
           name="brand"
           type="text"
           [(ngModel)]="brand"
-          placeholder="z. B. Nike"
+          [placeholder]="t('brandPlaceholder')"
         />
       </div>
 
       <div class="field">
-        <label for="size">Größe</label>
+        <label for="size">
+          {{ t('size') }}
+        </label>
 
         <input
           id="size"
           name="size"
           type="text"
           [(ngModel)]="size"
-          placeholder="z. B. 25"
+          [placeholder]="t('sizePlaceholder')"
         />
       </div>
 
     </div>
 
     <div class="field">
-      <label for="purchasePrice">Einkaufspreis</label>
+      <label for="purchasePrice">
+        {{ t('purchasePrice') }}
+      </label>
 
       <input
         id="purchasePrice"
@@ -179,7 +194,7 @@
         class="secondary"
         (click)="cancel()"
       >
-        Abbrechen
+        {{ t('cancel') }}
       </button>
 
       <button
@@ -187,7 +202,7 @@
         class="primary"
         [disabled]="loading"
       >
-        {{ loading ? 'Wird gespeichert...' : 'Artikel speichern' }}
+        {{ loading ? t('saving') : t('saveArticle') }}
       </button>
     </div>
 

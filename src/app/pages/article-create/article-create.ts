@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
+import { TranslationService } from '../../services/translation';
 
 type SelectedImage = {
   file: File;
@@ -31,8 +32,9 @@ export class ArticleCreate {
 
   constructor(
     private supabaseService: SupabaseService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private translationService: TranslationService
+  ) { }
 
   onImagesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -76,7 +78,7 @@ export class ArticleCreate {
     this.errorMessage = '';
 
     if (!this.title.trim()) {
-      this.errorMessage = 'Bitte gib einen Titel ein.';
+      this.errorMessage = this.translationService.t('titleRequired');
       return;
     }
 
@@ -89,7 +91,7 @@ export class ArticleCreate {
         await this.supabaseService.getUser();
 
       if (userError || !userData.user) {
-        this.errorMessage = 'Benutzer konnte nicht ermittelt werden.';
+        this.errorMessage = this.translationService.t('userNotFound');
         return;
       }
 
@@ -123,7 +125,7 @@ export class ArticleCreate {
 
       if (articleError || !article) {
         this.errorMessage =
-          articleError?.message ?? 'Artikel konnte nicht gespeichert werden.';
+          this.translationService.t('articleSaveFailed');
         return;
       }
 
@@ -185,7 +187,7 @@ export class ArticleCreate {
       console.error('Fehler beim Speichern:', error);
 
       this.errorMessage =
-        'Der Artikel oder die Bilder konnten nicht vollständig gespeichert werden.';
+        this.translationService.t('articleOrImagesSaveFailed');
 
     } finally {
       this.loading = false;
@@ -194,5 +196,9 @@ export class ArticleCreate {
 
   cancel() {
     this.router.navigate(['/articles']);
+  }
+
+  t(key: string): string {
+    return this.translationService.t(key);
   }
 }

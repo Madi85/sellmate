@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
+import { TranslationService } from '../../services/translation';
 
 type ArticleImage = {
   id: string;
@@ -40,8 +41,9 @@ export class ArticleDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private supabaseService: SupabaseService
-  ) {}
+    private supabaseService: SupabaseService,
+    private translationService: TranslationService
+  ) { }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -156,5 +158,56 @@ export class ArticleDetail implements OnInit {
     }).format(cents / 100);
   }
 
-  
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'draft':
+        return this.t('statusDraft');
+      case 'published':
+        return this.t('statusPublished');
+      case 'sold':
+        return this.t('statusSold');
+      default:
+        return status;
+    }
+  }
+
+  getCategoryLabel(category: string): string {
+    switch (category) {
+      case 'clothing':
+        return this.t('categoryClothing');
+      case 'shoes':
+        return this.t('categoryShoes');
+      case 'accessories':
+        return this.t('categoryAccessories');
+      case 'toys':
+        return this.t('categoryToys');
+      case 'home':
+        return this.t('categoryHome');
+      case 'other':
+        return this.t('categoryOther');
+      default:
+        return category;
+    }
+  }
+
+  getConditionLabel(condition: string): string {
+    switch (condition) {
+      case 'new':
+        return this.t('conditionNew');
+      case 'like_new':
+        return this.t('conditionLikeNew');
+      case 'very_good':
+        return this.t('conditionVeryGood');
+      case 'good':
+        return this.t('conditionGood');
+      case 'satisfactory':
+        return this.t('conditionSatisfactory');
+      default:
+        return condition;
+    }
+  }
+
+  t(key: string) {
+    return this.translationService.t(key);
+  }
 }

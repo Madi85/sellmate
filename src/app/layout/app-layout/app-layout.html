@@ -3,13 +3,39 @@
     <h1>SellMate</h1>
 
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Übersicht</a>
-      <a routerLink="/articles" routerLinkActive="active">Artikel</a>
-      <a routerLink="/articles/new" routerLinkActive="active">+ Artikel</a>
-      <a routerLink="/statistics" routerLinkActive="active">Statistik</a>
+      <a routerLink="/dashboard" routerLinkActive="active">
+        {{ t('overview') }}
+      </a>
+
+      <a routerLink="/articles" routerLinkActive="active">
+        {{ t('articles') }}
+      </a>
+
+      <a routerLink="/articles/new" routerLinkActive="active">
+        {{ t('addArticleNav') }}
+      </a>
+
+      <a routerLink="/statistics" routerLinkActive="active">
+        {{ t('statistics') }}
+      </a>
     </nav>
 
-    <button (click)="logout()">Abmelden</button>
+    <div class="sidebar-bottom">
+      <div class="language-switcher">
+        <select
+          [value]="currentLanguage"
+          (change)="setLanguage($any($event.target).value)"
+        >
+          <option value="de">{{ t('languageGerman') }}</option>
+          <option value="en">{{ t('languageEnglish') }}</option>
+          <option value="ar">{{ t('languageArabic') }}</option>
+        </select>
+      </div>
+
+      <button (click)="logout()">
+        {{ t('logout') }}
+      </button>
+    </div>
   </aside>
 
   <main class="content">
