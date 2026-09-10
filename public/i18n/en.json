@@ -68,5 +68,9 @@
   "savingChanges": "Saving...",
   "saveChanges": "Save changes",
   "backToArticles": "← Back to articles",
-  "noPhotoAvailable": "No photo available"
+  "noPhotoAvailable": "No photo available",
+  "articleLoadFailed": "The article could not be loaded.",
+  "saveChangesFailed": "The changes could not be saved completely.",
+  "imageDeleteFailed": "The image could not be deleted.",
+  "coverImageFailed": "The cover image could not be changed."
 }

@@ -32,14 +32,43 @@
 
   <div class="form-row">
 
-    <div class="field">
+    <!-- <div class="field">
       <label>{{ t('category') }}</label>
       <input [(ngModel)]="category" />
-    </div>
+    </div> -->
 
     <div class="field">
-      <label>{{ t('brand') }}</label>
-      <input [(ngModel)]="brand" />
+      <label>{{ t('category') }}</label>
+
+      <select [(ngModel)]="category">
+        <option [ngValue]="''">
+          {{ t('pleaseSelect') }}
+        </option>
+
+        <option [ngValue]="'clothing'">
+          {{ t('categoryClothing') }}
+        </option>
+
+        <option [ngValue]="'shoes'">
+          {{ t('categoryShoes') }}
+        </option>
+
+        <option [ngValue]="'accessories'">
+          {{ t('categoryAccessories') }}
+        </option>
+
+        <option [ngValue]="'toys'">
+          {{ t('categoryToys') }}
+        </option>
+
+        <option [ngValue]="'home'">
+          {{ t('categoryHome') }}
+        </option>
+
+        <option [ngValue]="'other'">
+          {{ t('categoryOther') }}
+        </option>
+      </select>
     </div>
 
   </div>

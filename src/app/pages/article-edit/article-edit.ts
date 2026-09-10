@@ -89,7 +89,7 @@ export class ArticleEdit implements OnInit {
 
       if (error || !data) {
         this.errorMessage.set(
-          error?.message ?? 'Artikel konnte nicht geladen werden.'
+          error?.message ?? this.t('articleLoadFailed')
         );
         return;
       }
@@ -99,7 +99,7 @@ export class ArticleEdit implements OnInit {
       this.category = data.category ?? '';
       this.brand = data.brand ?? '';
       this.size = data.size ?? '';
-      this.condition = data.condition ?? '';
+      this.condition = (data.condition ?? '').trim();
 
       this.purchasePrice =
         data.purchase_price_cents !== null
@@ -129,7 +129,7 @@ export class ArticleEdit implements OnInit {
 
     } catch (error) {
       console.error(error);
-      this.errorMessage.set('Artikel konnte nicht geladen werden.');
+      this.errorMessage.set(this.t('articleLoadFailed'));
     } finally {
       this.loading.set(false);
     }
@@ -181,7 +181,7 @@ export class ArticleEdit implements OnInit {
         .remove([image.storage_path]);
 
     if (storageError) {
-      this.errorMessage.set(storageError.message);
+      this.errorMessage.set(this.t('imageDeleteFailed'));
       return;
     }
 
@@ -192,7 +192,12 @@ export class ArticleEdit implements OnInit {
         .eq('id', image.id);
 
     if (dbError) {
-      this.errorMessage.set(dbError.message);
+      console.error('Supabase image database delete error:', dbError);
+
+      this.errorMessage.set(
+        this.t('imageDeleteFailed')
+      );
+
       return;
     }
 
@@ -216,7 +221,12 @@ export class ArticleEdit implements OnInit {
         .eq('id', image.id);
 
     if (error) {
-      this.errorMessage.set(error.message);
+      console.error('Supabase cover image error:', error);
+
+      this.errorMessage.set(
+        this.t('coverImageFailed')
+      );
+
       return;
     }
 
@@ -244,7 +254,7 @@ export class ArticleEdit implements OnInit {
 
   async saveArticle() {
     if (!this.title.trim()) {
-      this.errorMessage.set('Bitte gib einen Titel ein.');
+      this.errorMessage.set(this.t('titleRequired'));
       return;
     }
 
@@ -273,7 +283,7 @@ export class ArticleEdit implements OnInit {
           .eq('id', this.articleId);
 
       if (updateError) {
-        this.errorMessage.set(updateError.message);
+        this.errorMessage.set(this.t('saveChangesFailed'));
         return;
       }
 
@@ -282,7 +292,7 @@ export class ArticleEdit implements OnInit {
 
       if (userError || !userData.user) {
         this.errorMessage.set(
-          'Benutzer konnte nicht ermittelt werden.'
+          this.t('userNotFound')
         );
         return;
       }
@@ -343,7 +353,7 @@ export class ArticleEdit implements OnInit {
     } catch (error) {
       console.error(error);
       this.errorMessage.set(
-        'Änderungen konnten nicht vollständig gespeichert werden.'
+        this.t('saveChangesFailed')
       );
     } finally {
       this.saving.set(false);

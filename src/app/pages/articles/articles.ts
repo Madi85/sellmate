@@ -131,12 +131,23 @@ export class Articles implements OnInit {
       return '–';
     }
 
-    return new Intl.NumberFormat('de-DE', {
+    const localeMap = {
+      de: 'de-DE',
+      en: 'en-GB',
+      ar: 'ar-SA'
+    };
+
+    const language =
+      this.translationService.language();
+
+    const locale =
+      localeMap[language];
+
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'EUR'
     }).format(cents / 100);
   }
-
   getConditionLabel(condition: string | null): string {
     switch (condition) {
       case 'new':

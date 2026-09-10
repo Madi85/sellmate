@@ -68,5 +68,9 @@
   "savingChanges": "جارٍ الحفظ...",
   "saveChanges": "حفظ التغييرات",
   "backToArticles": "العودة إلى المنتجات →",
-  "noPhotoAvailable": "لا توجد صورة"
+  "noPhotoAvailable": "لا توجد صورة",
+  "articleLoadFailed": "تعذر تحميل المنتج.",
+  "saveChangesFailed": "تعذر حفظ التغييرات بالكامل.",
+  "imageDeleteFailed": "تعذر حذف الصورة.",
+  "coverImageFailed": "تعذر تغيير الصورة الرئيسية."
 }

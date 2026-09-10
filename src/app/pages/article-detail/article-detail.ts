@@ -146,13 +146,25 @@ export class ArticleDetail implements OnInit {
     }
   }
 
-  formatPrice(cents: number | null) {
+  formatPrice(cents: number | null): string {
 
     if (cents === null) {
       return '–';
     }
 
-    return new Intl.NumberFormat('de-DE', {
+    const localeMap = {
+      de: 'de-DE',
+      en: 'en-GB',
+      ar: 'ar-SA'
+    };
+
+    const language =
+      this.translationService.language();
+
+    const locale =
+      localeMap[language];
+
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'EUR'
     }).format(cents / 100);
