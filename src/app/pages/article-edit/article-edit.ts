@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 import { TranslationService } from '../../services/translation';
+import { ARTICLE_CATEGORIES, ARTICLE_CONDITIONS } from '../../shared/article-options';
 
 type ExistingImage = {
   id: string;
@@ -37,6 +38,8 @@ export class ArticleEdit implements OnInit {
 
   existingImages = signal<ExistingImage[]>([]);
   newImages = signal<SelectedImage[]>([]);
+  categories = ARTICLE_CATEGORIES;
+  conditions = ARTICLE_CONDITIONS;
 
   loading = signal(true);
   saving = signal(false);
@@ -283,7 +286,12 @@ export class ArticleEdit implements OnInit {
           .eq('id', this.articleId);
 
       if (updateError) {
-        this.errorMessage.set(this.t('saveChangesFailed'));
+        console.error('Supabase update article error:', updateError);
+
+        this.errorMessage.set(
+          this.t('saveChangesFailed')
+        );
+
         return;
       }
 
@@ -299,7 +307,13 @@ export class ArticleEdit implements OnInit {
 
       const userId = userData.user.id;
 
-      let nextSortOrder = this.existingImages().length;
+      const existingSortOrders =
+        this.existingImages().map(image => image.sort_order);
+
+      let nextSortOrder =
+        existingSortOrders.length > 0
+          ? Math.max(...existingSortOrders) + 1
+          : 0;
 
       const hasCover =
         this.existingImages().some(image => image.is_cover);

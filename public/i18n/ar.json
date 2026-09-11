@@ -72,5 +72,11 @@
   "articleLoadFailed": "تعذر تحميل المنتج.",
   "saveChangesFailed": "تعذر حفظ التغييرات بالكامل.",
   "imageDeleteFailed": "تعذر حذف الصورة.",
-  "coverImageFailed": "تعذر تغيير الصورة الرئيسية."
+  "coverImageFailed": "تعذر تغيير الصورة الرئيسية.",
+  "searchArticles": "البحث في المنتجات...",
+  "allCategories": "كل الفئات",
+  "allConditions": "كل الحالات",
+  "allStatuses": "كل الحالات",
+  "noMatchingArticles": "لم يتم العثور على منتجات مطابقة.",
+  "resetFilters": "إعادة ضبط الفلاتر"
 }

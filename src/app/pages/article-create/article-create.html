@@ -11,12 +11,7 @@
   <label class="image-upload">
     <span>{{ t('selectPhotos') }}</span>
 
-    <input
-      type="file"
-      accept="image/*"
-      multiple
-      (change)="onImagesSelected($event)"
-    />
+    <input type="file" accept="image/*" multiple (change)="onImagesSelected($event)" />
   </label>
 
   <small>
@@ -26,39 +21,32 @@
 
 @if (selectedImages.length > 0) {
 
-  <div class="image-preview-grid">
+<div class="image-preview-grid">
 
-    @for (
-      image of selectedImages;
-      track image.previewUrl;
-      let i = $index
-    ) {
+  @for (
+  image of selectedImages;
+  track image.previewUrl;
+  let i = $index
+  ) {
 
-      <div class="image-preview">
+  <div class="image-preview">
 
-        <img
-          [src]="image.previewUrl"
-          [alt]="t('articleImageAlt')"
-        />
+    <img [src]="image.previewUrl" [alt]="t('articleImageAlt')" />
 
-        @if (i === 0) {
-          <span class="cover-badge">
-            {{ t('coverImage') }}
-          </span>
-        }
-
-        <button
-          type="button"
-          class="remove-image"
-          (click)="removeImage(i)"
-        >
-          ×
-        </button>
-
-      </div>
+    @if (i === 0) {
+    <span class="cover-badge">
+      {{ t('coverImage') }}
+    </span>
     }
 
+    <button type="button" class="remove-image" (click)="removeImage(i)">
+      ×
+    </button>
+
   </div>
+  }
+
+</div>
 }
 
 <div class="article-form-card">
@@ -70,13 +58,7 @@
         {{ t('title') }} *
       </label>
 
-      <input
-        id="title"
-        name="title"
-        type="text"
-        [(ngModel)]="title"
-        [placeholder]="t('titlePlaceholder')"
-      />
+      <input id="title" name="title" type="text" [(ngModel)]="title" [placeholder]="t('titlePlaceholder')" />
     </div>
 
     <div class="field">
@@ -84,13 +66,8 @@
         {{ t('description') }}
       </label>
 
-      <textarea
-        id="description"
-        name="description"
-        [(ngModel)]="description"
-        rows="5"
-        [placeholder]="t('descriptionPlaceholder')"
-      ></textarea>
+      <textarea id="description" name="description" [(ngModel)]="description" rows="5"
+        [placeholder]="t('descriptionPlaceholder')"></textarea>
     </div>
 
     <div class="form-row">
@@ -100,18 +77,16 @@
           {{ t('category') }}
         </label>
 
-        <select
-          id="category"
-          name="category"
-          [(ngModel)]="category"
-        >
-          <option value="">{{ t('pleaseSelect') }}</option>
-          <option value="clothing">{{ t('categoryClothing') }}</option>
-          <option value="shoes">{{ t('categoryShoes') }}</option>
-          <option value="accessories">{{ t('categoryAccessories') }}</option>
-          <option value="toys">{{ t('categoryToys') }}</option>
-          <option value="home">{{ t('categoryHome') }}</option>
-          <option value="other">{{ t('categoryOther') }}</option>
+        <select [(ngModel)]="category" name="category">
+          <option [ngValue]="''">
+            {{ t('pleaseSelect') }}
+          </option>
+
+          @for (category of categories; track category) {
+          <option [ngValue]="category">
+            {{ t('category' + category.charAt(0).toUpperCase() + category.slice(1)) }}
+          </option>
+          }
         </select>
       </div>
 
@@ -120,17 +95,19 @@
           {{ t('condition') }}
         </label>
 
-        <select
-          id="condition"
-          name="condition"
-          [(ngModel)]="condition"
-        >
-          <option value="">{{ t('pleaseSelect') }}</option>
-          <option value="new">{{ t('conditionNew') }}</option>
-          <option value="like_new">{{ t('conditionLikeNew') }}</option>
-          <option value="very_good">{{ t('conditionVeryGood') }}</option>
-          <option value="good">{{ t('conditionGood') }}</option>
-          <option value="satisfactory">{{ t('conditionSatisfactory') }}</option>
+        <select [(ngModel)]="condition" name="condition">
+          <option [ngValue]="''">
+            {{ t('pleaseSelect') }}
+          </option>
+
+          @for (condition of conditions; track condition) {
+          <option [ngValue]="condition">
+            {{ t('condition' + condition
+            .split('_')
+            .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+            .join('')) }}
+          </option>
+          }
         </select>
       </div>
 
@@ -143,13 +120,7 @@
           {{ t('brand') }}
         </label>
 
-        <input
-          id="brand"
-          name="brand"
-          type="text"
-          [(ngModel)]="brand"
-          [placeholder]="t('brandPlaceholder')"
-        />
+        <input id="brand" name="brand" type="text" [(ngModel)]="brand" [placeholder]="t('brandPlaceholder')" />
       </div>
 
       <div class="field">
@@ -157,13 +128,7 @@
           {{ t('size') }}
         </label>
 
-        <input
-          id="size"
-          name="size"
-          type="text"
-          [(ngModel)]="size"
-          [placeholder]="t('sizePlaceholder')"
-        />
+        <input id="size" name="size" type="text" [(ngModel)]="size" [placeholder]="t('sizePlaceholder')" />
       </div>
 
     </div>
@@ -173,35 +138,20 @@
         {{ t('purchasePrice') }}
       </label>
 
-      <input
-        id="purchasePrice"
-        name="purchasePrice"
-        type="number"
-        min="0"
-        step="0.01"
-        [(ngModel)]="purchasePrice"
-        placeholder="0,00"
-      />
+      <input id="purchasePrice" name="purchasePrice" type="number" min="0" step="0.01" [(ngModel)]="purchasePrice"
+        placeholder="0,00" />
     </div>
 
     @if (errorMessage) {
-      <p class="error">{{ errorMessage }}</p>
+    <p class="error">{{ errorMessage }}</p>
     }
 
     <div class="actions">
-      <button
-        type="button"
-        class="secondary"
-        (click)="cancel()"
-      >
+      <button type="button" class="secondary" (click)="cancel()">
         {{ t('cancel') }}
       </button>
 
-      <button
-        type="submit"
-        class="primary"
-        [disabled]="loading"
-      >
+      <button type="submit" class="primary" [disabled]="loading">
         {{ loading ? t('saving') : t('saveArticle') }}
       </button>
     </div>

@@ -72,5 +72,11 @@
   "articleLoadFailed": "Artikel konnte nicht geladen werden.",
   "saveChangesFailed": "Änderungen konnten nicht vollständig gespeichert werden.",
   "imageDeleteFailed": "Das Bild konnte nicht gelöscht werden.",
-  "coverImageFailed": "Das Titelbild konnte nicht geändert werden."
+  "coverImageFailed": "Das Titelbild konnte nicht geändert werden.",
+  "searchArticles": "Artikel suchen...",
+  "allCategories": "Alle Kategorien",
+  "allConditions": "Alle Zustände",
+  "allStatuses": "Alle Status",
+  "noMatchingArticles": "Keine passenden Artikel gefunden.",
+  "resetFilters": "Filter zurücksetzen"
 }

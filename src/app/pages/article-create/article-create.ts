@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 import { TranslationService } from '../../services/translation';
 
+import {
+  ARTICLE_CATEGORIES,
+  ARTICLE_CONDITIONS
+} from '../../shared/article-options';
+
 type SelectedImage = {
   file: File;
   previewUrl: string;
@@ -26,6 +31,9 @@ export class ArticleCreate {
   purchasePrice: number | null = null;
 
   selectedImages: SelectedImage[] = [];
+
+  categories = ARTICLE_CATEGORIES;
+  conditions = ARTICLE_CONDITIONS;
 
   loading = false;
   errorMessage = '';
@@ -78,7 +86,7 @@ export class ArticleCreate {
     this.errorMessage = '';
 
     if (!this.title.trim()) {
-      this.errorMessage = this.translationService.t('titleRequired');
+      this.errorMessage = this.t('titleRequired');
       return;
     }
 
@@ -91,7 +99,11 @@ export class ArticleCreate {
         await this.supabaseService.getUser();
 
       if (userError || !userData.user) {
-        this.errorMessage = this.translationService.t('userNotFound');
+        console.error('Supabase user error:', userError);
+
+        this.errorMessage =
+          this.t('userNotFound');
+
         return;
       }
 
@@ -124,8 +136,11 @@ export class ArticleCreate {
           .single();
 
       if (articleError || !article) {
+        console.error('Supabase article create error:', articleError);
+
         this.errorMessage =
-          this.translationService.t('articleSaveFailed');
+          this.t('articleSaveFailed');
+
         return;
       }
 
@@ -187,7 +202,7 @@ export class ArticleCreate {
       console.error('Fehler beim Speichern:', error);
 
       this.errorMessage =
-        this.translationService.t('articleOrImagesSaveFailed');
+        this.t('articleOrImagesSaveFailed');
 
     } finally {
       this.loading = false;

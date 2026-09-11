@@ -9,98 +9,152 @@
   </a>
 </div>
 
+<div class="article-filters">
+
+  <input type="search" [placeholder]="t('searchArticles')" [value]="searchTerm()"
+    (input)="searchTerm.set($any($event.target).value)" />
+
+  <select [value]="selectedCategory()" (change)="selectedCategory.set($any($event.target).value)">
+    <option value="">
+      {{ t('allCategories') }}
+    </option>
+
+    @for (category of categories; track category) {
+    <option [value]="category">
+      {{ getCategoryLabel(category) }}
+    </option>
+    }
+  </select>
+
+  <select [value]="selectedCondition()" (change)="selectedCondition.set($any($event.target).value)">
+    <option value="">
+      {{ t('allConditions') }}
+    </option>
+
+    @for (condition of conditions; track condition) {
+    <option [value]="condition">
+      {{ getConditionLabel(condition) }}
+    </option>
+    }
+  </select>
+
+  <select [value]="selectedStatus()" (change)="selectedStatus.set($any($event.target).value)">
+    <option value="">
+      {{ t('allStatuses') }}
+    </option>
+
+    @for (status of statuses; track status) {
+    <option [value]="status">
+      {{ getStatusLabel(status) }}
+    </option>
+    }
+  </select>
+  @if (hasActiveFilters()) {
+<button
+  type="button"
+  class="reset-filter-button"
+  (click)="resetFilters()"
+>
+  {{ t('resetFilters') }}
+</button>
+  }
+
+</div>
+
 @if (errorMessage()) {
-  <p class="error">
-    {{ errorMessage() }}
-  </p>
+<p class="error">
+  {{ errorMessage() }}
+</p>
 }
 
 @if (loading()) {
 
-  <p>{{ t('articlesLoading') }}</p>
+<p>{{ t('articlesLoading') }}</p>
+
+} @else if (articles().length === 0) {
+
+<div class="empty-state">
+  <h2>{{ t('noArticles') }}</h2>
+
+  <p>
+    {{ t('createFirstArticle') }}
+  </p>
+
+  <a routerLink="/articles/new">
+    {{ t('addFirstArticle') }}
+  </a>
+</div>
+
+} @else if (filteredArticles().length === 0) {
+
+<div class="empty-filter-result">
+  <p>{{ t('noMatchingArticles') }}</p>
+</div>
 
 } @else {
 
-  @if (articles().length === 0) {
+<div class="article-grid">
 
-    <div class="empty-state">
-      <h2>{{ t('noArticles') }}</h2>
+  @for (article of filteredArticles(); track article.id) {
 
-      <p>
-        {{ t('createFirstArticle') }}
-      </p>
+  <a class="article-card" [routerLink]="['/articles', article.id]">
 
-      <a routerLink="/articles/new">
-        {{ t('addFirstArticle') }}
-      </a>
+    @if (article.coverUrl) {
+
+    <div class="article-image">
+      <img [src]="article.coverUrl" [alt]="article.title" />
     </div>
 
-  } @else {
+    } @else {
 
-    <div class="article-grid">
+    <div class="image-placeholder">
+      {{ t('noPhoto') }}
+    </div>
 
-      @for (article of articles(); track article.id) {
+    }
 
-        <a
-          class="article-card"
-          [routerLink]="['/articles', article.id]"
-        >
+    <div class="article-content">
 
-          @if (article.coverUrl) {
+      <div class="status">
+        {{ getStatusLabel(article.status) }}
+      </div>
 
-            <div class="article-image">
-              <img
-                [src]="article.coverUrl"
-                [alt]="article.title"
-              />
-            </div>
+      <h2>
+        {{ article.title }}
+      </h2>
 
-          } @else {
+      <div class="details">
 
-            <div class="image-placeholder">
-              {{ t('noPhoto') }}
-            </div>
+        @if (article.brand) {
+        <span>{{ article.brand }}</span>
+        }
 
-          }
+        @if (article.size) {
+        <span>
+          {{ t('size') }}:
+          {{ article.size }}
+        </span>
+        }
 
-          <div class="article-content">
+        @if (article.condition) {
+        <span>
+          {{ getConditionLabel(article.condition) }}
+        </span>
+        }
 
-            <div class="status">
-              {{ getStatusLabel(article.status) }}
-            </div>
+      </div>
 
-            <h2>{{ article.title }}</h2>
-
-            <div class="details">
-
-              @if (article.brand) {
-                <span>{{ article.brand }}</span>
-              }
-
-              @if (article.size) {
-                <span>
-                  {{ t('size') }} {{ article.size }}
-                </span>
-              }
-
-              <span>
-                {{ getConditionLabel(article.condition) }}
-              </span>
-
-            </div>
-
-            <div class="price">
-              {{ t('purchase') }}:
-              {{ formatPrice(article.purchase_price_cents) }}
-            </div>
-
-          </div>
-
-        </a>
-
-      }
+      <div class="price">
+        {{ t('purchase') }}:
+        {{ formatPrice(article.purchase_price_cents) }}
+      </div>
 
     </div>
+
+  </a>
 
   }
+
+</div>
+
 }

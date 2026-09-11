@@ -40,34 +40,16 @@
     <div class="field">
       <label>{{ t('category') }}</label>
 
-      <select [(ngModel)]="category">
+      <select [(ngModel)]="category" name="category">
         <option [ngValue]="''">
           {{ t('pleaseSelect') }}
         </option>
 
-        <option [ngValue]="'clothing'">
-          {{ t('categoryClothing') }}
+        @for (category of categories; track category) {
+        <option [ngValue]="category">
+          {{ t('category' + category.charAt(0).toUpperCase() + category.slice(1)) }}
         </option>
-
-        <option [ngValue]="'shoes'">
-          {{ t('categoryShoes') }}
-        </option>
-
-        <option [ngValue]="'accessories'">
-          {{ t('categoryAccessories') }}
-        </option>
-
-        <option [ngValue]="'toys'">
-          {{ t('categoryToys') }}
-        </option>
-
-        <option [ngValue]="'home'">
-          {{ t('categoryHome') }}
-        </option>
-
-        <option [ngValue]="'other'">
-          {{ t('categoryOther') }}
-        </option>
+        }
       </select>
     </div>
 
@@ -83,15 +65,19 @@
     <div class="field">
       <label>{{ t('condition') }}</label>
 
-      <select [(ngModel)]="condition">
-        <option value="">{{ t('pleaseSelect') }}</option>
-        <option value="new">{{ t('conditionNew') }}</option>
-        <option value="like_new">{{ t('conditionLikeNew') }}</option>
-        <option value="very_good">{{ t('conditionVeryGood') }}</option>
-        <option value="good">{{ t('conditionGood') }}</option>
-        <option value="satisfactory">
-          {{ t('conditionSatisfactory') }}
+      <select [(ngModel)]="condition" name="condition">
+        <option [ngValue]="''">
+          {{ t('pleaseSelect') }}
         </option>
+
+        @for (condition of conditions; track condition) {
+        <option [ngValue]="condition">
+          {{ t('condition' + condition
+          .split('_')
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+          .join('')) }}
+        </option>
+        }
       </select>
     </div>
 

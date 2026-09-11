@@ -72,5 +72,11 @@
   "articleLoadFailed": "The article could not be loaded.",
   "saveChangesFailed": "The changes could not be saved completely.",
   "imageDeleteFailed": "The image could not be deleted.",
-  "coverImageFailed": "The cover image could not be changed."
+  "coverImageFailed": "The cover image could not be changed.",
+  "searchArticles": "Search articles...",
+  "allCategories": "All categories",
+  "allConditions": "All conditions",
+  "allStatuses": "All statuses",
+  "noMatchingArticles": "No matching articles found.",
+  "resetFilters": "Reset filters"
 }

@@ -3,6 +3,16 @@ import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 import { TranslationService } from '../../services/translation';
 
+import {
+  ARTICLE_CATEGORIES,
+  ARTICLE_CONDITIONS,
+  ARTICLE_STATUSES,
+  getCategoryTranslationKey,
+  getConditionTranslationKey,
+  getStatusTranslationKey
+} from '../../shared/article-options';
+
+
 type ArticleImage = {
   storage_path: string;
   is_cover: boolean;
@@ -12,15 +22,14 @@ type ArticleImage = {
 type Article = {
   id: string;
   title: string;
+  category: string | null;
   brand: string | null;
   size: string | null;
   condition: string | null;
   status: string;
   purchase_price_cents: number | null;
   created_at: string;
-
   article_images: ArticleImage[];
-
   coverUrl?: string | null;
 };
 @Component({
@@ -34,6 +43,15 @@ export class Articles implements OnInit {
   articles = signal<Article[]>([]);
   loading = signal(true);
   errorMessage = signal('');
+
+  searchTerm = signal('');
+  selectedCategory = signal('');
+  selectedCondition = signal('');
+  selectedStatus = signal('');
+
+  categories = ARTICLE_CATEGORIES;
+  conditions = ARTICLE_CONDITIONS;
+  statuses = ARTICLE_STATUSES;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -54,6 +72,7 @@ export class Articles implements OnInit {
         .select(`
         id,
         title,
+        category,
         brand,
         size,
         condition,
@@ -126,6 +145,36 @@ export class Articles implements OnInit {
   t(key: string): string {
     return this.translationService.t(key);
   }
+
+  filteredArticles() {
+    const search = this.searchTerm().trim().toLowerCase();
+    const category = this.selectedCategory();
+    const condition = this.selectedCondition();
+    const status = this.selectedStatus();
+
+    return this.articles().filter(article => {
+      const matchesSearch =
+        !search ||
+        article.title.toLowerCase().includes(search) ||
+        (article.brand ?? '').toLowerCase().includes(search);
+
+      const matchesCategory =
+        !category || article.category === category;
+
+      const matchesCondition =
+        !condition || article.condition === condition;
+
+      const matchesStatus =
+        !status || article.status === status;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesCondition &&
+        matchesStatus
+      );
+    });
+  }
   formatPrice(cents: number | null): string {
     if (cents === null) {
       return '–';
@@ -148,41 +197,45 @@ export class Articles implements OnInit {
       currency: 'EUR'
     }).format(cents / 100);
   }
+
   getConditionLabel(condition: string | null): string {
-    switch (condition) {
-      case 'new':
-        return this.t('conditionNew');
-
-      case 'like_new':
-        return this.t('conditionLikeNew');
-
-      case 'very_good':
-        return this.t('conditionVeryGood');
-
-      case 'good':
-        return this.t('conditionGood');
-
-      case 'satisfactory':
-        return this.t('conditionSatisfactory');
-
-      default:
-        return '–';
+    if (!condition) {
+      return '–';
     }
+
+    return this.t(
+      getConditionTranslationKey(condition)
+    );
   }
 
+  getCategoryLabel(category: string | null): string {
+    if (!category) {
+      return '–';
+    }
+
+    return this.t(
+      getCategoryTranslationKey(category)
+    );
+  }
   getStatusLabel(status: string): string {
-    switch (status) {
-      case 'draft':
-        return this.t('statusDraft');
-
-      case 'published':
-        return this.t('statusPublished');
-
-      case 'sold':
-        return this.t('statusSold');
-
-      default:
-        return status;
-    }
+    return this.t(
+      getStatusTranslationKey(status)
+    );
   }
+
+  resetFilters(): void {
+    this.searchTerm.set('');
+    this.selectedCategory.set('');
+    this.selectedCondition.set('');
+    this.selectedStatus.set('');
+  }
+  
+  hasActiveFilters(): boolean {
+  return (
+    this.searchTerm().trim() !== '' ||
+    this.selectedCategory() !== '' ||
+    this.selectedCondition() !== '' ||
+    this.selectedStatus() !== ''
+  );
+}
 }
