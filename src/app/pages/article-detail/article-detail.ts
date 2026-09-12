@@ -259,4 +259,160 @@ export class ArticleDetail implements OnInit {
   async restoreArticle(): Promise<void> {
     await this.updateStatus('online');
   }
+
+  async deleteArticle(): Promise<void> {
+    const article = this.article();
+
+    if (!article) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      this.t('deleteArticleConfirm')
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.errorMessage.set('');
+
+    try {
+      const storagePaths =
+        article.article_images
+          .map(image => image.storage_path)
+          .filter(Boolean);
+
+      if (storagePaths.length > 0) {
+        const { error: storageError } =
+          await this.supabaseService.client.storage
+            .from('article-images')
+            .remove(storagePaths);
+
+        if (storageError) {
+          console.error(
+            'Supabase storage delete error:',
+            storageError
+          );
+
+          this.errorMessage.set(
+            this.t('deleteArticleFailed')
+          );
+
+          return;
+        }
+      }
+
+      const { error: imagesError } =
+        await this.supabaseService.client
+          .from('article_images')
+          .delete()
+          .eq('article_id', article.id);
+
+      if (imagesError) {
+        console.error(
+          'Supabase article images delete error:',
+          imagesError
+        );
+
+        this.errorMessage.set(
+          this.t('deleteArticleFailed')
+        );
+
+        return;
+      }
+
+      const { error: articleError } =
+        await this.supabaseService.client
+          .from('articles')
+          .delete()
+          .eq('id', article.id);
+
+      if (articleError) {
+        console.error(
+          'Supabase article delete error:',
+          articleError
+        );
+
+        this.errorMessage.set(
+          this.t('deleteArticleFailed')
+        );
+
+        return;
+      }
+
+      await this.router.navigate(['/articles']);
+
+    } catch (error) {
+      console.error(
+        'Fehler beim Löschen des Artikels:',
+        error
+      );
+
+      this.errorMessage.set(
+        this.t('deleteArticleFailed')
+      );
+    }
+  }
+
+  async duplicateArticle(): Promise<void> {
+  const article = this.article();
+
+  if (!article) {
+    return;
+  }
+
+  this.errorMessage.set('');
+
+  const {
+    data: { user },
+    error: userError
+  } = await this.supabaseService.getUser();
+
+  if (userError || !user) {
+    console.error('User konnte nicht geladen werden:', userError);
+
+    this.errorMessage.set(
+      this.t('userNotFound')
+    );
+
+    return;
+  }
+
+  const { data, error } =
+    await this.supabaseService.client
+      .from('articles')
+      .insert({
+        user_id: user.id,
+        title: article.title,
+        description: article.description,
+        category: article.category,
+        brand: article.brand,
+        size: article.size,
+        condition: article.condition,
+        purchase_price_cents: article.purchase_price_cents,
+        status: 'draft'
+      })
+      .select('id')
+      .single();
+
+  if (error || !data) {
+    console.error(
+      'Supabase duplicate article error:',
+      error
+    );
+
+    this.errorMessage.set(
+      this.t('duplicateArticleFailed')
+    );
+
+    return;
+  }
+
+  await this.router.navigate([
+    '/articles',
+    data.id,
+    'edit'
+  ]);
+}
 }

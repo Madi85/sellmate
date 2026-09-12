@@ -89,5 +89,10 @@
   "markAsSold": "تحديد كمباع",
   "updateStatusFailed": "تعذر تغيير حالة المنتج.",
   "archiveArticle": "أرشفة المنتج",
-  "restoreArticle": "إعادة نشر المنتج"
+  "restoreArticle": "إعادة نشر المنتج",
+  "deleteArticle": "حذف المنتج",
+  "deleteArticleConfirm": "هل تريد حذف هذا المنتج بالفعل؟ لا يمكن التراجع عن هذه العملية.",
+  "deleteArticleFailed": "تعذر حذف المنتج.",
+  "duplicateArticle": "نسخ المنتج",
+  "duplicateArticleFailed": "تعذر نسخ المنتج."
 }

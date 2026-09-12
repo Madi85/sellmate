@@ -89,5 +89,10 @@
   "markAsSold": "Mark as sold",
   "updateStatusFailed": "The article status could not be changed.",
   "archiveArticle": "Archive",
-  "restoreArticle": "Put online again"
+  "restoreArticle": "Put online again",
+  "deleteArticle": "Delete article",
+  "deleteArticleConfirm": "Do you really want to delete this article? This action cannot be undone.",
+  "deleteArticleFailed": "The article could not be deleted.",
+  "duplicateArticle": "Duplicate article",
+  "duplicateArticleFailed": "The article could not be duplicated."
 }

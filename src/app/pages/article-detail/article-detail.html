@@ -69,6 +69,9 @@
       <a [routerLink]="['/articles', item.id, 'edit']" class="action-button">
         {{ t('editArticle') }}
       </a>
+      <button type="button" class="action-button action-button-secondary" (click)="duplicateArticle()">
+        {{ t('duplicateArticle') }}
+      </button>
 
       @if (item.status === 'draft') {
       <button type="button" class="action-button" (click)="publishArticle()">
@@ -110,8 +113,12 @@
         {{ t('restoreArticle') }}
       </button>
       }
+      <button type="button" class="action-button action-button-danger" (click)="deleteArticle()">
+        {{ t('deleteArticle') }}
+      </button>
 
     </div>
+
 
     @if (item.description) {
     <p class="description">

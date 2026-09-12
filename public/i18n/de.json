@@ -89,5 +89,10 @@
   "markAsSold": "Als verkauft markieren",
   "updateStatusFailed": "Der Artikelstatus konnte nicht geändert werden.",
   "archiveArticle": "Archivieren",
-  "restoreArticle": "Wieder online stellen"
+  "restoreArticle": "Wieder online stellen",
+  "deleteArticle": "Artikel löschen",
+  "deleteArticleConfirm": "Möchtest du diesen Artikel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+  "deleteArticleFailed": "Der Artikel konnte nicht gelöscht werden.",
+  "duplicateArticle": "Artikel duplizieren",
+  "duplicateArticleFailed": "Der Artikel konnte nicht dupliziert werden."
 }

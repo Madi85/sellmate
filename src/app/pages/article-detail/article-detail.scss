@@ -212,3 +212,15 @@
     }
   }
 }
+
+.action-button-danger {
+  background: #fff;
+  color: #b00020;
+  border-color: #b00020;
+
+  &:hover {
+    background: #b00020;
+    color: #fff;
+    border-color: #b00020;
+  }
+}
