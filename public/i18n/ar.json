@@ -78,5 +78,16 @@
   "allConditions": "كل الحالات",
   "allStatuses": "كل الحالات",
   "noMatchingArticles": "لم يتم العثور على منتجات مطابقة.",
-  "resetFilters": "إعادة ضبط الفلاتر"
+  "resetFilters": "إعادة ضبط الفلاتر",
+  "publishArticle": "نشر المنتج",
+  "publishArticleFailed": "تعذر نشر المنتج.",
+  "statusOnline": "متصل",
+  "statusReserved": "محجوز",
+  "statusArchived": "مؤرشف",
+  "reserveArticle": "حجز المنتج",
+  "removeReservation": "إلغاء الحجز",
+  "markAsSold": "تحديد كمباع",
+  "updateStatusFailed": "تعذر تغيير حالة المنتج.",
+  "archiveArticle": "أرشفة المنتج",
+  "restoreArticle": "إعادة نشر المنتج"
 }

@@ -78,5 +78,16 @@
   "allConditions": "All conditions",
   "allStatuses": "All statuses",
   "noMatchingArticles": "No matching articles found.",
-  "resetFilters": "Reset filters"
+  "resetFilters": "Reset filters",
+  "publishArticle": "Publish",
+  "publishArticleFailed": "The article could not be published.",
+  "statusOnline": "Online",
+  "statusReserved": "Reserved",
+  "statusArchived": "Archived",
+  "reserveArticle": "Reserve",
+  "removeReservation": "Remove reservation",
+  "markAsSold": "Mark as sold",
+  "updateStatusFailed": "The article status could not be changed.",
+  "archiveArticle": "Archive",
+  "restoreArticle": "Put online again"
 }

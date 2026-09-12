@@ -78,5 +78,16 @@
   "allConditions": "Alle Zustände",
   "allStatuses": "Alle Status",
   "noMatchingArticles": "Keine passenden Artikel gefunden.",
-  "resetFilters": "Filter zurücksetzen"
+  "resetFilters": "Filter zurücksetzen",
+  "publishArticle": "Veröffentlichen",
+  "publishArticleFailed": "Der Artikel konnte nicht veröffentlicht werden.",
+  "statusOnline": "Online",
+  "statusReserved": "Reserviert",
+  "statusArchived": "Archiviert",
+  "reserveArticle": "Reservieren",
+  "removeReservation": "Reservierung aufheben",
+  "markAsSold": "Als verkauft markieren",
+  "updateStatusFailed": "Der Artikelstatus konnte nicht geändert werden.",
+  "archiveArticle": "Archivieren",
+  "restoreArticle": "Wieder online stellen"
 }

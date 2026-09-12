@@ -64,9 +64,54 @@
       {{ getStatusLabel(item.status) }}
     </span>
 
-    <a [routerLink]="['/articles', item.id, 'edit']" class="edit-button">
-      {{ t('editArticle') }}
-    </a>
+    <div class="article-actions">
+
+      <a [routerLink]="['/articles', item.id, 'edit']" class="action-button">
+        {{ t('editArticle') }}
+      </a>
+
+      @if (item.status === 'draft') {
+      <button type="button" class="action-button" (click)="publishArticle()">
+        {{ t('publishArticle') }}
+      </button>
+      }
+
+      @if (item.status === 'online') {
+      <button type="button" class="action-button action-button-secondary" (click)="reserveArticle()">
+        {{ t('reserveArticle') }}
+      </button>
+
+      <button type="button" class="action-button" (click)="markAsSold()">
+        {{ t('markAsSold') }}
+      </button>
+      }
+
+      @if (item.status === 'reserved') {
+      <button type="button" class="action-button action-button-secondary" (click)="removeReservation()">
+        {{ t('removeReservation') }}
+      </button>
+
+      <button type="button" class="action-button" (click)="markAsSold()">
+        {{ t('markAsSold') }}
+      </button>
+      }
+
+      @if (
+      item.status === 'online' ||
+      item.status === 'reserved' ||
+      item.status === 'sold'
+      ) {
+      <button type="button" class="action-button action-button-secondary" (click)="archiveArticle()">
+        {{ t('archiveArticle') }}
+      </button>
+      }
+      @if (item.status === 'archived') {
+      <button type="button" class="action-button" (click)="restoreArticle()">
+        {{ t('restoreArticle') }}
+      </button>
+      }
+
+    </div>
 
     @if (item.description) {
     <p class="description">

@@ -56,8 +56,10 @@ export function getConditionTranslationKey(condition: string): string {
 
 export const ARTICLE_STATUSES = [
     'draft',
-    'published',
-    'sold'
+    'online',
+    'reserved',
+    'sold',
+    'archived'
 ] as const;
 
 export type ArticleStatus =
@@ -67,10 +69,14 @@ export function getStatusTranslationKey(status: string): string {
     switch (status) {
         case 'draft':
             return 'statusDraft';
-        case 'published':
-            return 'statusPublished';
+        case 'online':
+            return 'statusOnline';
+        case 'reserved':
+            return 'statusReserved';
         case 'sold':
             return 'statusSold';
+        case 'archived':
+            return 'statusArchived';    
         default:
             return status;
     }

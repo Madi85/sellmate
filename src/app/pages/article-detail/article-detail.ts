@@ -176,11 +176,11 @@ export class ArticleDetail implements OnInit {
     }).format(cents / 100);
   }
 
-getStatusLabel(status: string): string {
-  return this.t(
-    getStatusTranslationKey(status)
-  );
-}
+  getStatusLabel(status: string): string {
+    return this.t(
+      getStatusTranslationKey(status)
+    );
+  }
 
   getCategoryLabel(category: string): string {
     return this.t(
@@ -196,5 +196,67 @@ getStatusLabel(status: string): string {
 
   t(key: string) {
     return this.translationService.t(key);
+  }
+
+  async publishArticle(): Promise<void> {
+    await this.updateStatus('online');
+  }
+
+  async updateStatus(
+    status: 'online' | 'reserved' | 'sold' | 'archived'
+  ): Promise<void> {
+    const article = this.article();
+
+    if (!article) {
+      return;
+    }
+
+    this.errorMessage.set('');
+
+    const { error } =
+      await this.supabaseService.client
+        .from('articles')
+        .update({
+          status,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', article.id);
+
+    if (error) {
+      console.error('Supabase update status error:', error);
+      this.errorMessage.set(
+        this.t('updateStatusFailed')
+      );
+      return;
+    }
+
+    this.article.update(current =>
+      current
+        ? {
+          ...current,
+          status
+        }
+        : current
+    );
+  }
+
+  async reserveArticle(): Promise<void> {
+    await this.updateStatus('reserved');
+  }
+
+  async removeReservation(): Promise<void> {
+    await this.updateStatus('online');
+  }
+
+  async markAsSold(): Promise<void> {
+    await this.updateStatus('sold');
+  }
+
+  async archiveArticle(): Promise<void> {
+    await this.updateStatus('archived');
+  }
+
+  async restoreArticle(): Promise<void> {
+    await this.updateStatus('online');
   }
 }
