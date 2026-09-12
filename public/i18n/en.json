@@ -103,5 +103,9 @@
   "totalPurchaseValue": "Total purchase value",
   "soldPurchaseValue": "Purchase value of sold articles",
   "articleStatusOverview": "Status overview",
-  "articleStatusOverviewSubtitle": "Distribution of your articles by status"
+  "articleStatusOverviewSubtitle": "Distribution of your articles by status",
+  "salePrice": "Sale price",
+  "salePricePlaceholder": "e.g. €29.99",
+  "salesRevenue": "Revenue",
+  "profit": "Profit"
 }

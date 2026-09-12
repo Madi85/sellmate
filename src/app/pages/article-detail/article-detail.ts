@@ -26,6 +26,7 @@ type Article = {
   size: string | null;
   condition: string | null;
   purchase_price_cents: number | null;
+  sale_price_cents: number | null;
   status: string;
   article_images: ArticleImage[];
 };
@@ -79,6 +80,7 @@ export class ArticleDetail implements OnInit {
           size,
           condition,
           purchase_price_cents,
+          sale_price_cents,
           status,
           article_images (
             id,

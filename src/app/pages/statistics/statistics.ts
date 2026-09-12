@@ -9,8 +9,12 @@ type ArticleStatistics = {
   reserved: number;
   sold: number;
   archived: number;
+
   totalPurchaseValue: number;
   soldPurchaseValue: number;
+
+  salesRevenue: number;
+  profit: number;
 };
 
 @Component({
@@ -31,8 +35,12 @@ export class Statistics implements OnInit {
     reserved: 0,
     sold: 0,
     archived: 0,
+
     totalPurchaseValue: 0,
-    soldPurchaseValue: 0
+    soldPurchaseValue: 0,
+
+    salesRevenue: 0,
+    profit: 0
   });
 
   constructor(
@@ -51,7 +59,9 @@ export class Statistics implements OnInit {
     const { data, error } =
       await this.supabaseService.client
         .from('articles')
-        .select('status, purchase_price_cents');
+        .select(
+          'status, purchase_price_cents, sale_price_cents'
+        );
 
     if (error) {
       console.error(
@@ -69,21 +79,34 @@ export class Statistics implements OnInit {
 
     const articles = data ?? [];
 
-    const totalPurchaseValue = articles.reduce(
-      (sum, article) =>
-        sum + (article.purchase_price_cents ?? 0),
-      0
-    );
-
-    const soldPurchaseValue = articles
-      .filter(
+    const soldArticles =
+      articles.filter(
         article => article.status === 'sold'
-      )
-      .reduce(
+      );
+
+    const totalPurchaseValue =
+      articles.reduce(
         (sum, article) =>
           sum + (article.purchase_price_cents ?? 0),
         0
       );
+
+    const soldPurchaseValue =
+      soldArticles.reduce(
+        (sum, article) =>
+          sum + (article.purchase_price_cents ?? 0),
+        0
+      );
+
+    const salesRevenue =
+      soldArticles.reduce(
+        (sum, article) =>
+          sum + (article.sale_price_cents ?? 0),
+        0
+      );
+
+    const profit =
+      salesRevenue - soldPurchaseValue;
 
     this.statistics.set({
       total: articles.length,
@@ -100,16 +123,16 @@ export class Statistics implements OnInit {
         article => article.status === 'reserved'
       ).length,
 
-      sold: articles.filter(
-        article => article.status === 'sold'
-      ).length,
+      sold: soldArticles.length,
 
       archived: articles.filter(
         article => article.status === 'archived'
       ).length,
 
       totalPurchaseValue,
-      soldPurchaseValue
+      soldPurchaseValue,
+      salesRevenue,
+      profit
     });
 
     this.loading.set(false);
@@ -156,37 +179,42 @@ export class Statistics implements OnInit {
       {
         label: this.t('statusDraft'),
         value: stats.draft,
-        height: stats.draft === 0
-          ? 4
-          : (stats.draft / max) * maxBarHeight
+        height:
+          stats.draft === 0
+            ? 4
+            : (stats.draft / max) * maxBarHeight
       },
       {
         label: this.t('statusOnline'),
         value: stats.online,
-        height: stats.online === 0
-          ? 4
-          : (stats.online / max) * maxBarHeight
+        height:
+          stats.online === 0
+            ? 4
+            : (stats.online / max) * maxBarHeight
       },
       {
         label: this.t('statusReserved'),
         value: stats.reserved,
-        height: stats.reserved === 0
-          ? 4
-          : (stats.reserved / max) * maxBarHeight
+        height:
+          stats.reserved === 0
+            ? 4
+            : (stats.reserved / max) * maxBarHeight
       },
       {
         label: this.t('statusSold'),
         value: stats.sold,
-        height: stats.sold === 0
-          ? 4
-          : (stats.sold / max) * maxBarHeight
+        height:
+          stats.sold === 0
+            ? 4
+            : (stats.sold / max) * maxBarHeight
       },
       {
         label: this.t('statusArchived'),
         value: stats.archived,
-        height: stats.archived === 0
-          ? 4
-          : (stats.archived / max) * maxBarHeight
+        height:
+          stats.archived === 0
+            ? 4
+            : (stats.archived / max) * maxBarHeight
       }
     ];
   }

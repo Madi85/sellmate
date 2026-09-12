@@ -45,6 +45,8 @@ export class ArticleEdit implements OnInit {
   saving = signal(false);
   errorMessage = signal('');
 
+  salePrice: number | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -80,6 +82,7 @@ export class ArticleEdit implements OnInit {
           size,
           condition,
           purchase_price_cents,
+          sale_price_cents,
           article_images (
             id,
             storage_path,
@@ -107,6 +110,11 @@ export class ArticleEdit implements OnInit {
       this.purchasePrice =
         data.purchase_price_cents !== null
           ? data.purchase_price_cents / 100
+          : null;
+
+      this.salePrice =
+        data.sale_price_cents !== null
+          ? data.sale_price_cents / 100
           : null;
 
       const images: ExistingImage[] = (data.article_images ?? [])
@@ -256,6 +264,16 @@ export class ArticleEdit implements OnInit {
   }
 
   async saveArticle() {
+
+    console.log('purchasePrice:', this.purchasePrice);
+    console.log('salePrice:', this.salePrice);
+    console.log(
+      'salePrice cents:',
+      this.salePrice !== null
+        ? Math.round(this.salePrice * 100)
+        : null
+    );
+    
     if (!this.title.trim()) {
       this.errorMessage.set(this.t('titleRequired'));
       return;
@@ -280,6 +298,10 @@ export class ArticleEdit implements OnInit {
             brand: this.brand.trim() || null,
             size: this.size.trim() || null,
             condition: this.condition || null,
+            sale_price_cents:
+              this.salePrice !== null
+                ? Math.round(this.salePrice * 100)
+                : null,
             purchase_price_cents: purchasePriceCents,
             updated_at: new Date().toISOString()
           })

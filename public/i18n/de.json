@@ -103,5 +103,9 @@
   "totalPurchaseValue": "Einkaufswert gesamt",
   "soldPurchaseValue": "Einkaufswert verkaufter Artikel",
   "articleStatusOverview": "Statusübersicht",
-  "articleStatusOverviewSubtitle": "Verteilung deiner Artikel nach Status"
+  "articleStatusOverviewSubtitle": "Verteilung deiner Artikel nach Status",
+  "salePrice": "Verkaufspreis",
+  "salePricePlaceholder": "z. B. 29,99 €",
+  "salesRevenue": "Umsatz",
+  "profit": "Gewinn"
 }

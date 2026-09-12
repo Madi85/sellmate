@@ -148,6 +148,30 @@
 
     </div>
 
+    <div class="value-grid">
+
+        <div class="statistics-card value-card">
+            <span class="statistics-label">
+                {{ t('salesRevenue') }}
+            </span>
+
+            <strong class="statistics-value">
+                {{ formatPrice(statistics().salesRevenue) }}
+            </strong>
+        </div>
+
+        <div class="statistics-card value-card">
+            <span class="statistics-label">
+                {{ t('profit') }}
+            </span>
+
+            <strong class="statistics-value">
+                {{ formatPrice(statistics().profit) }}
+            </strong>
+        </div>
+
+    </div>
+
 </div>
 
 }

@@ -103,5 +103,9 @@
   "totalPurchaseValue": "إجمالي قيمة الشراء",
   "soldPurchaseValue": "قيمة شراء المنتجات المباعة",
   "articleStatusOverview": "نظرة عامة على الحالات",
-  "articleStatusOverviewSubtitle": "توزيع المنتجات حسب الحالة"
+  "articleStatusOverviewSubtitle": "توزيع المنتجات حسب الحالة",
+  "salePrice": "سعر البيع",
+  "salePricePlaceholder": "مثال: 29.99 €",
+  "salesRevenue": "الإيرادات",
+  "profit": "الربح"
 }

@@ -164,6 +164,13 @@
         </strong>
       </div>
 
+      @if (item.sale_price_cents !== null) {
+      <div>
+        <span>{{ t('salePrice') }}</span>
+        <strong>{{ formatPrice(item.sale_price_cents) }}</strong>
+      </div>
+      }
+
     </div>
 
   </section>
