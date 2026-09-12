@@ -94,5 +94,14 @@
   "deleteArticleConfirm": "Möchtest du diesen Artikel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
   "deleteArticleFailed": "Der Artikel konnte nicht gelöscht werden.",
   "duplicateArticle": "Artikel duplizieren",
-  "duplicateArticleFailed": "Der Artikel konnte nicht dupliziert werden."
+  "duplicateArticleFailed": "Der Artikel konnte nicht dupliziert werden.",
+  "statisticsTitle": "Statistik",
+  "statisticsSubtitle": "Übersicht über deine Artikel",
+  "statisticsLoading": "Statistik wird geladen...",
+  "statisticsTotal": "Alle Artikel",
+  "statisticsLoadFailed": "Die Statistik konnte nicht geladen werden.",
+  "totalPurchaseValue": "Einkaufswert gesamt",
+  "soldPurchaseValue": "Einkaufswert verkaufter Artikel",
+  "articleStatusOverview": "Statusübersicht",
+  "articleStatusOverviewSubtitle": "Verteilung deiner Artikel nach Status"
 }

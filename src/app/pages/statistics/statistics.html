@@ -1,1 +1,153 @@
-<p>statistics works!</p>
+<div class="page-header">
+    <div>
+        <h1>{{ t('statisticsTitle') }}</h1>
+        <p>{{ t('statisticsSubtitle') }}</p>
+    </div>
+</div>
+
+@if (errorMessage()) {
+<p class="error">
+    {{ errorMessage() }}
+</p>
+}
+
+@if (loading()) {
+
+<p>
+    {{ t('statisticsLoading') }}
+</p>
+
+} @else {
+
+<div class="statistics-grid">
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statisticsTotal') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().total }}
+        </strong>
+    </div>
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statusDraft') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().draft }}
+        </strong>
+    </div>
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statusOnline') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().online }}
+        </strong>
+    </div>
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statusReserved') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().reserved }}
+        </strong>
+    </div>
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statusSold') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().sold }}
+        </strong>
+    </div>
+
+    <div class="statistics-card">
+        <span class="statistics-label">
+            {{ t('statusArchived') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ statistics().archived }}
+        </strong>
+    </div>
+
+</div>
+
+<div class="value-grid">
+
+    <div class="statistics-card value-card">
+        <span class="statistics-label">
+            {{ t('totalPurchaseValue') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ formatPrice(statistics().totalPurchaseValue) }}
+        </strong>
+    </div>
+
+    <div class="statistics-card value-card">
+        <span class="statistics-label">
+            {{ t('soldPurchaseValue') }}
+        </span>
+
+        <strong class="statistics-value">
+            {{ formatPrice(statistics().soldPurchaseValue) }}
+        </strong>
+    </div>
+
+</div>
+
+<div class="chart-card">
+
+    <div class="chart-header">
+        <h2>
+            {{ t('articleStatusOverview') }}
+        </h2>
+
+        <p>
+            {{ t('articleStatusOverviewSubtitle') }}
+        </p>
+    </div>
+    <div class="chart">
+
+        @for (item of statusChartData(); track item.label) {
+
+        <div class="bar-group">
+
+            <div class="bar-area">
+
+                <div class="bar-container">
+
+                    <span class="bar-value">
+                        {{ item.value }}
+                    </span>
+
+                    <div class="bar" [style.height.px]="item.height"></div>
+
+                </div>
+
+            </div>
+
+            <span class="bar-label">
+                {{ item.label }}
+            </span>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>
+
+}

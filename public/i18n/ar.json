@@ -94,5 +94,14 @@
   "deleteArticleConfirm": "هل تريد حذف هذا المنتج بالفعل؟ لا يمكن التراجع عن هذه العملية.",
   "deleteArticleFailed": "تعذر حذف المنتج.",
   "duplicateArticle": "نسخ المنتج",
-  "duplicateArticleFailed": "تعذر نسخ المنتج."
+  "duplicateArticleFailed": "تعذر نسخ المنتج.",
+  "statisticsTitle": "الإحصائيات",
+  "statisticsSubtitle": "نظرة عامة على منتجاتك",
+  "statisticsLoading": "جارٍ تحميل الإحصائيات...",
+  "statisticsTotal": "جميع المنتجات",
+  "statisticsLoadFailed": "تعذر تحميل الإحصائيات.",
+  "totalPurchaseValue": "إجمالي قيمة الشراء",
+  "soldPurchaseValue": "قيمة شراء المنتجات المباعة",
+  "articleStatusOverview": "نظرة عامة على الحالات",
+  "articleStatusOverviewSubtitle": "توزيع المنتجات حسب الحالة"
 }

@@ -94,5 +94,14 @@
   "deleteArticleConfirm": "Do you really want to delete this article? This action cannot be undone.",
   "deleteArticleFailed": "The article could not be deleted.",
   "duplicateArticle": "Duplicate article",
-  "duplicateArticleFailed": "The article could not be duplicated."
+  "duplicateArticleFailed": "The article could not be duplicated.",
+  "statisticsTitle": "Statistics",
+  "statisticsSubtitle": "Overview of your articles",
+  "statisticsLoading": "Statistics are loading...",
+  "statisticsTotal": "All articles",
+  "statisticsLoadFailed": "The statistics could not be loaded.",
+  "totalPurchaseValue": "Total purchase value",
+  "soldPurchaseValue": "Purchase value of sold articles",
+  "articleStatusOverview": "Status overview",
+  "articleStatusOverviewSubtitle": "Distribution of your articles by status"
 }
