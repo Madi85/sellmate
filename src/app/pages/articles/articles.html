@@ -49,14 +49,39 @@
     </option>
     }
   </select>
+  <select [value]="selectedSort()" (change)="selectedSort.set($any($event.target).value)">
+    <option value="newest">
+      {{ t('sortNewest') }}
+    </option>
+
+    <option value="oldest">
+      {{ t('sortOldest') }}
+    </option>
+
+    <option value="purchasePriceAsc">
+      {{ t('sortPurchasePriceAsc') }}
+    </option>
+
+    <option value="purchasePriceDesc">
+      {{ t('sortPurchasePriceDesc') }}
+    </option>
+
+    <option value="salePriceAsc">
+      {{ t('sortSalePriceAsc') }}
+    </option>
+
+    <option value="salePriceDesc">
+      {{ t('sortSalePriceDesc') }}
+    </option>
+
+    <option value="profitDesc">
+      {{ t('sortProfitDesc') }}
+    </option>
+  </select>
   @if (hasActiveFilters()) {
-<button
-  type="button"
-  class="reset-filter-button"
-  (click)="resetFilters()"
->
-  {{ t('resetFilters') }}
-</button>
+  <button type="button" class="reset-filter-button" (click)="resetFilters()">
+    {{ t('resetFilters') }}
+  </button>
   }
 
 </div>
@@ -144,9 +169,42 @@
 
       </div>
 
-      <div class="price">
-        {{ t('purchase') }}:
-        {{ formatPrice(article.purchase_price_cents) }}
+      <div class="price-block">
+
+        <div class="price-row">
+          <span>{{ t('purchase') }}</span>
+          <strong>
+            {{ formatPrice(article.purchase_price_cents) }}
+          </strong>
+        </div>
+
+        @if (article.sale_price_cents !== null) {
+        <div class="price-row">
+          <span>{{ t('salePrice') }}</span>
+          <strong>
+            {{ formatPrice(article.sale_price_cents) }}
+          </strong>
+        </div>
+        }
+
+        @if (article.status === 'sold' && getProfit(article) !== null) {
+        <div class="price-row">
+          <span>{{ t('profit') }}</span>
+          <strong>
+            {{ formatPrice(getProfit(article)) }}
+          </strong>
+        </div>
+        }
+
+        @if (article.status === 'sold' && article.sold_at) {
+        <div class="price-row sold-date">
+          <span>{{ t('soldAt') }}</span>
+          <strong>
+            {{ formatDate(article.sold_at) }}
+          </strong>
+        </div>
+        }
+
       </div>
 
     </div>

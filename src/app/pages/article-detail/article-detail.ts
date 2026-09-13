@@ -9,6 +9,8 @@ import {
   getStatusTranslationKey
 } from '../../shared/article-options';
 
+import { FormsModule } from '@angular/forms';
+
 type ArticleImage = {
   id: string;
   storage_path: string;
@@ -29,11 +31,14 @@ type Article = {
   sale_price_cents: number | null;
   status: string;
   article_images: ArticleImage[];
+  sold_at: string | null;
+  sales_platform: string | null;
+  selling_fees_cents: number | null;
 };
 
 @Component({
   selector: 'app-article-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './article-detail.html',
   styleUrl: './article-detail.scss'
 })
@@ -44,6 +49,18 @@ export class ArticleDetail implements OnInit {
   errorMessage = signal('');
 
   selectedImageUrl = signal<string | null>(null);
+
+  showSoldForm = signal(false);
+  salePrice: number | null = null;
+  savingSale = signal(false);
+  salesPlatform = '';
+  sellingFees: number | null = null;
+
+  salesPlatforms = [
+    'vinted',
+    'kleinanzeigen',
+    'other'
+  ] as const;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,7 +98,10 @@ export class ArticleDetail implements OnInit {
           condition,
           purchase_price_cents,
           sale_price_cents,
+          sold_at,
           status,
+          sales_platform,
+          selling_fees_cents,
           article_images (
             id,
             storage_path,
@@ -178,6 +198,28 @@ export class ArticleDetail implements OnInit {
     }).format(cents / 100);
   }
 
+  formatDate(date: string | null): string {
+    if (!date) {
+      return '–';
+    }
+
+    const localeMap = {
+      de: 'de-DE',
+      en: 'en-GB',
+      ar: 'ar-SA'
+    };
+
+    const language =
+      this.translationService.language();
+
+    const locale =
+      localeMap[language];
+
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium'
+    }).format(new Date(date));
+  }
+
   getStatusLabel(status: string): string {
     return this.t(
       getStatusTranslationKey(status)
@@ -250,10 +292,112 @@ export class ArticleDetail implements OnInit {
     await this.updateStatus('online');
   }
 
-  async markAsSold(): Promise<void> {
-    await this.updateStatus('sold');
+  markAsSold(): void {
+    const article = this.article();
+
+    if (!article) {
+      return;
+    }
+
+    this.salePrice =
+      article.sale_price_cents !== null
+        ? article.sale_price_cents / 100
+        : null;
+
+    this.salesPlatform =
+      article.sales_platform ?? '';
+
+    this.sellingFees =
+      article.selling_fees_cents !== null
+        ? article.selling_fees_cents / 100
+        : 0;
+
+    this.showSoldForm.set(true);
+  }
+  cancelSoldForm(): void {
+    this.showSoldForm.set(false);
+
+    this.salePrice = null;
+    this.salesPlatform = '';
+    this.sellingFees = null;
   }
 
+  async confirmSold(): Promise<void> {
+    const article = this.article();
+
+
+    if (!article) {
+      return;
+    }
+
+    if (
+      this.salePrice === null ||
+      this.salePrice < 0
+    ) {
+      this.errorMessage.set(
+        this.t('salePriceRequired')
+      );
+      return;
+    }
+
+    this.savingSale.set(true);
+    this.errorMessage.set('');
+
+    const salePriceCents =
+      Math.round(this.salePrice * 100);
+
+    const sellingFeesCents =
+      Math.round((this.sellingFees ?? 0) * 100);
+
+    const soldAt =
+      new Date().toISOString();
+
+    const { error } =
+      await this.supabaseService.client
+        .from('articles')
+        .update({
+          status: 'sold',
+          sale_price_cents: salePriceCents,
+          sales_platform:
+            this.salesPlatform || null,
+          selling_fees_cents: sellingFeesCents,
+          sold_at: soldAt,
+          updated_at: soldAt
+        })
+        .eq('id', article.id);
+
+    if (error) {
+      console.error(
+        'Supabase mark article as sold error:',
+        error
+      );
+
+      this.errorMessage.set(
+        this.t('markAsSoldFailed')
+      );
+
+      this.savingSale.set(false);
+      return;
+    }
+
+    this.article.update(current =>
+      current
+        ? {
+          ...current,
+          status: 'sold',
+          sale_price_cents: salePriceCents,
+          sales_platform:
+            this.salesPlatform || null,
+          selling_fees_cents: sellingFeesCents,
+          sold_at: soldAt
+        }
+        : current
+    );
+
+    this.showSoldForm.set(false);
+    this.salePrice = null;
+    this.savingSale.set(false);
+  }
   async archiveArticle(): Promise<void> {
     await this.updateStatus('archived');
   }
@@ -358,63 +502,63 @@ export class ArticleDetail implements OnInit {
   }
 
   async duplicateArticle(): Promise<void> {
-  const article = this.article();
+    const article = this.article();
 
-  if (!article) {
-    return;
+    if (!article) {
+      return;
+    }
+
+    this.errorMessage.set('');
+
+    const {
+      data: { user },
+      error: userError
+    } = await this.supabaseService.getUser();
+
+    if (userError || !user) {
+      console.error('User konnte nicht geladen werden:', userError);
+
+      this.errorMessage.set(
+        this.t('userNotFound')
+      );
+
+      return;
+    }
+
+    const { data, error } =
+      await this.supabaseService.client
+        .from('articles')
+        .insert({
+          user_id: user.id,
+          title: article.title,
+          description: article.description,
+          category: article.category,
+          brand: article.brand,
+          size: article.size,
+          condition: article.condition,
+          purchase_price_cents: article.purchase_price_cents,
+          status: 'draft'
+        })
+        .select('id')
+        .single();
+
+    if (error || !data) {
+      console.error(
+        'Supabase duplicate article error:',
+        error
+      );
+
+      this.errorMessage.set(
+        this.t('duplicateArticleFailed')
+      );
+
+      return;
+    }
+
+    await this.router.navigate([
+      '/articles',
+      data.id,
+      'edit'
+    ]);
   }
-
-  this.errorMessage.set('');
-
-  const {
-    data: { user },
-    error: userError
-  } = await this.supabaseService.getUser();
-
-  if (userError || !user) {
-    console.error('User konnte nicht geladen werden:', userError);
-
-    this.errorMessage.set(
-      this.t('userNotFound')
-    );
-
-    return;
-  }
-
-  const { data, error } =
-    await this.supabaseService.client
-      .from('articles')
-      .insert({
-        user_id: user.id,
-        title: article.title,
-        description: article.description,
-        category: article.category,
-        brand: article.brand,
-        size: article.size,
-        condition: article.condition,
-        purchase_price_cents: article.purchase_price_cents,
-        status: 'draft'
-      })
-      .select('id')
-      .single();
-
-  if (error || !data) {
-    console.error(
-      'Supabase duplicate article error:',
-      error
-    );
-
-    this.errorMessage.set(
-      this.t('duplicateArticleFailed')
-    );
-
-    return;
-  }
-
-  await this.router.navigate([
-    '/articles',
-    data.id,
-    'edit'
-  ]);
-}
 }

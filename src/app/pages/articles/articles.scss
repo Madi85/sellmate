@@ -245,3 +245,32 @@
     grid-template-columns: 1fr;
   }
 }
+
+.price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  span {
+    color: #666;
+    font-size: 14px;
+  }
+
+  strong {
+    font-size: 14px;
+    text-align: right;
+  }
+}
+
+.sold-date {
+  margin-top: 2px;
+}

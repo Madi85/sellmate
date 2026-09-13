@@ -63,7 +63,7 @@ export class Statistics implements OnInit {
       await this.supabaseService.client
         .from('articles')
         .select(
-          'status, purchase_price_cents, sale_price_cents'
+          'status, purchase_price_cents, sale_price_cents, selling_fees_cents'
         );
 
     if (error) {
@@ -81,7 +81,6 @@ export class Statistics implements OnInit {
     }
 
     const articles = data ?? [];
-
     const soldArticles =
       articles.filter(
         article => article.status === 'sold'
@@ -108,8 +107,17 @@ export class Statistics implements OnInit {
         0
       );
 
+    const sellingFees =
+      soldArticles.reduce(
+        (sum, article) =>
+          sum + (article.selling_fees_cents ?? 0),
+        0
+      );
+
     const profit =
-      salesRevenue - soldPurchaseValue;
+      salesRevenue
+      - soldPurchaseValue
+      - sellingFees;
 
     const profitMargin =
       salesRevenue > 0

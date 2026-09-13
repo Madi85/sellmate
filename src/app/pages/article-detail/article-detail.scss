@@ -224,3 +224,86 @@
     border-color: #b00020;
   }
 }
+
+.sold-form {
+  margin-top: 24px;
+  padding: 24px;
+  max-width: 520px;
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  h3 {
+    margin: 0 0 20px;
+    font-size: 20px;
+  }
+}
+
+.sold-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 16px;
+
+    background: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: #222;
+    }
+  }
+}
+
+.sold-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .sold-form {
+    max-width: none;
+    padding: 18px;
+  }
+
+  .sold-form-actions {
+    flex-direction: column;
+  }
+
+  .sold-form-actions .action-button {
+    width: 100%;
+  }
+}
+
+input,
+select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 16px;
+  background: #fff;
+
+  &:focus {
+    outline: none;
+    border-color: #222;
+  }
+}

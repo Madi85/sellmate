@@ -119,6 +119,76 @@
 
     </div>
 
+    @if (showSoldForm()) {
+    <div class="sold-form">
+
+      <h3>
+        {{ t('completeSale') }}
+      </h3>
+
+      <div class="sold-form-field">
+        <label for="salesPlatform">
+          {{ t('salesPlatform') }}
+        </label>
+
+        <select id="salesPlatform" [(ngModel)]="salesPlatform">
+          <option value="">
+            {{ t('selectSalesPlatform') }}
+          </option>
+
+          <option value="vinted">
+            {{ t('platformVinted') }}
+          </option>
+
+          <option value="kleinanzeigen">
+            {{ t('platformKleinanzeigen') }}
+          </option>
+
+          <option value="other">
+            {{ t('platformOther') }}
+          </option>
+        </select>
+      </div>
+
+      <div class="sold-form-field">
+        <label for="soldSalePrice">
+          {{ t('salePrice') }}
+        </label>
+
+        <input id="soldSalePrice" type="number" min="0" step="0.01" [(ngModel)]="salePrice"
+          [placeholder]="t('salePricePlaceholder')" />
+      </div>
+
+      <div class="sold-form-field">
+        <label for="sellingFees">
+          {{ t('sellingFees') }}
+        </label>
+
+        <input id="sellingFees" type="number" min="0" step="0.01" [(ngModel)]="sellingFees"
+          [placeholder]="t('sellingFeesPlaceholder')" />
+      </div>
+
+      <div class="sold-form-actions">
+
+        <button type="button" class="action-button action-button-secondary" (click)="cancelSoldForm()"
+          [disabled]="savingSale()">
+          {{ t('cancel') }}
+        </button>
+
+        <button type="button" class="action-button" (click)="confirmSold()" [disabled]="savingSale()">
+
+          @if (savingSale()) {
+          {{ t('savingChanges') }}
+          } @else {
+          {{ t('confirmSale') }}
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+    }
 
     @if (item.description) {
     <p class="description">
@@ -171,6 +241,47 @@
       </div>
       }
 
+      @if (item.status === 'sold' && item.sold_at) {
+      <div>
+        <span>{{ t('soldAt') }}</span>
+        <strong>{{ formatDate(item.sold_at) }}</strong>
+      </div>
+      }
+      @if (item.sale_price_cents !== null) {
+      <div>
+        <span>{{ t('salePrice') }}</span>
+        <strong>{{ formatPrice(item.sale_price_cents) }}</strong>
+      </div>
+      }
+
+      @if (item.sales_platform) {
+      <div>
+        <span>{{ t('salesPlatform') }}</span>
+        <strong>
+          @if (item.sales_platform === 'vinted') {
+          {{ t('platformVinted') }}
+          } @else if (item.sales_platform === 'kleinanzeigen') {
+          {{ t('platformKleinanzeigen') }}
+          } @else {
+          {{ t('platformOther') }}
+          }
+        </strong>
+      </div>
+      }
+
+      @if (item.selling_fees_cents !== null) {
+      <div>
+        <span>{{ t('sellingFees') }}</span>
+        <strong>{{ formatPrice(item.selling_fees_cents) }}</strong>
+      </div>
+      }
+
+      @if (item.status === 'sold' && item.sold_at) {
+      <div>
+        <span>{{ t('soldAt') }}</span>
+        <strong>{{ formatDate(item.sold_at) }}</strong>
+      </div>
+      }
     </div>
 
   </section>

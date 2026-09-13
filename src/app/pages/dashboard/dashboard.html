@@ -1,9 +1,235 @@
 <div class="dashboard">
-  <h1>SellMate</h1>
 
-  <h2>Übersicht</h2>
+  <div class="dashboard-header">
+    <div>
+      <h1>{{ t('overview') }}</h1>
+      <p>{{ t('dashboardWelcome') }}</p>
+    </div>
 
-  <p>Willkommen bei SellMate 👋</p>
+    <a routerLink="/articles/new" class="add-button">
+      {{ t('addArticle') }}
+    </a>
+  </div>
 
- 
+  @if (errorMessage()) {
+  <p class="error">
+    {{ errorMessage() }}
+  </p>
+  }
+
+  @if (loading()) {
+
+  <p>
+    {{ t('dashboardLoading') }}
+  </p>
+
+  } @else {
+
+  <div class="dashboard-stats">
+
+    <div class="dashboard-card">
+      <span>
+        {{ t('statisticsTotal') }}
+      </span>
+
+      <strong>
+        {{ totalArticles() }}
+      </strong>
+    </div>
+
+    <div class="dashboard-card">
+      <span>
+        {{ t('statusOnline') }}
+      </span>
+
+      <strong>
+        {{ onlineArticles() }}
+      </strong>
+    </div>
+
+    <div class="dashboard-card">
+      <span>
+        {{ t('statusSold') }}
+      </span>
+
+      <strong>
+        {{ soldArticles() }}
+      </strong>
+    </div>
+
+  </div>
+
+  <div class="dashboard-values">
+
+    <div class="dashboard-card value-card">
+      <span>
+        {{ t('salesRevenue') }}
+      </span>
+
+      <strong>
+        {{ formatPrice(salesRevenue()) }}
+      </strong>
+    </div>
+
+    <div class="dashboard-card value-card">
+      <span>
+        {{ t('profit') }}
+      </span>
+
+      <strong>
+        {{ formatPrice(profit()) }}
+      </strong>
+    </div>
+
+  </div>
+
+  <section class="dashboard-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>
+          {{ t('recentArticles') }}
+        </h2>
+
+        <p>
+          {{ t('recentArticlesSubtitle') }}
+        </p>
+      </div>
+
+      <a routerLink="/articles">
+        {{ t('showAll') }}
+      </a>
+
+    </div>
+
+    @if (recentArticles().length === 0) {
+
+    <p class="empty-text">
+      {{ t('noArticles') }}
+    </p>
+
+    } @else {
+
+    <div class="dashboard-list">
+
+      @for (
+      article of recentArticles();
+      track article.id
+      ) {
+
+      <a class="dashboard-list-item" [routerLink]="[
+                '/articles',
+                article.id
+              ]">
+
+        <div>
+          <strong>
+            {{ article.title }}
+          </strong>
+
+          <span>
+            {{ t('purchase') }}:
+            {{
+            formatPrice(
+            article.purchase_price_cents ?? 0
+            )
+            }}
+          </span>
+        </div>
+
+        <span class="status-badge">
+          {{ article.status }}
+        </span>
+        <span class="status-badge">
+          {{ getStatusLabel(article.status) }}
+        </span>
+
+      </a>
+
+      }
+
+    </div>
+
+    }
+
+  </section>
+
+  <section class="dashboard-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>
+          {{ t('recentlySold') }}
+        </h2>
+
+        <p>
+          {{ t('recentlySoldSubtitle') }}
+        </p>
+      </div>
+
+    </div>
+
+    @if (
+    recentlySoldArticles().length === 0
+    ) {
+
+    <p class="empty-text">
+      {{ t('noSoldArticles') }}
+    </p>
+
+    } @else {
+
+    <div class="dashboard-list">
+
+      @for (
+      article of recentlySoldArticles();
+      track article.id
+      ) {
+
+      <a class="dashboard-list-item" [routerLink]="[
+                '/articles',
+                article.id
+              ]">
+
+        <div>
+          <strong>
+            {{ article.title }}
+          </strong>
+
+          <span>
+            {{ t('salePrice') }}:
+            {{
+            formatPrice(
+            article.sale_price_cents ?? 0
+            )
+            }}
+          </span>
+        </div>
+
+        <strong>
+          {{
+          formatPrice(
+          (article.sale_price_cents ?? 0)
+          -
+          (article.purchase_price_cents ?? 0)
+          -
+          (article.selling_fees_cents ?? 0)
+          )
+          }}
+        </strong>
+
+      </a>
+
+      }
+
+    </div>
+
+    }
+
+  </section>
+
+  }
+
 </div>
