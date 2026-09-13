@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --background: #f5f6f8;
+    --surface: #ffffff;
+    --surface-secondary: #f8f9fb;
+
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+
+    --border: #e5e7eb;
+    --input-background: #ffffff;
+
+    --hover-background: #f3f4f6;
+    --shadow: rgba(0, 0, 0, 0.08);
+}
+
+html.dark-theme {
+    --background: #111827;
+    --surface: #1f2937;
+    --surface-secondary: #263244;
+
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+
+    --border: #374151;
+    --input-background: #263244;
+
+    --hover-background: #2d3748;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+html,
+body {
+    margin: 0;
+
+    background: var(--background);
+    color: var(--text-primary);
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+body {
+    min-height: 100vh;
+}

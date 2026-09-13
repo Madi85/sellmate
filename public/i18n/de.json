@@ -137,5 +137,7 @@
   "recentlySoldSubtitle": "Deine letzten Verkäufe",
   "showAll": "Alle anzeigen",
   "noSoldArticles": "Noch keine verkauften Artikel.",
-  "dashboardLoadFailed": "Die Übersicht konnte nicht geladen werden."
+  "dashboardLoadFailed": "Die Übersicht konnte nicht geladen werden.",
+  "darkMode": "Dunkler Modus",
+  "lightMode": "Heller Modus"
 }

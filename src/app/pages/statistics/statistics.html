@@ -21,7 +21,7 @@
 
 <div class="statistics-grid">
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-total">
         <span class="statistics-label">
             {{ t('statisticsTotal') }}
         </span>
@@ -31,7 +31,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-draft">
         <span class="statistics-label">
             {{ t('statusDraft') }}
         </span>
@@ -41,7 +41,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-online">
         <span class="statistics-label">
             {{ t('statusOnline') }}
         </span>
@@ -51,7 +51,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-reserved">
         <span class="statistics-label">
             {{ t('statusReserved') }}
         </span>
@@ -61,7 +61,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-sold">
         <span class="statistics-label">
             {{ t('statusSold') }}
         </span>
@@ -71,7 +71,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card">
+    <div class="statistics-card statistics-archived">
         <span class="statistics-label">
             {{ t('statusArchived') }}
         </span>
@@ -85,7 +85,7 @@
 
 <div class="value-grid">
 
-    <div class="statistics-card value-card">
+    <div class="statistics-card value-card value-purchase">
         <span class="statistics-label">
             {{ t('totalPurchaseValue') }}
         </span>
@@ -95,7 +95,7 @@
         </strong>
     </div>
 
-    <div class="statistics-card value-card">
+    <div class="statistics-card value-card value-sold-purchase">
         <span class="statistics-label">
             {{ t('soldPurchaseValue') }}
         </span>
@@ -118,6 +118,7 @@
             {{ t('articleStatusOverviewSubtitle') }}
         </p>
     </div>
+
     <div class="chart">
 
         @for (item of statusChartData(); track item.label) {
@@ -132,7 +133,8 @@
                         {{ item.value }}
                     </span>
 
-                    <div class="bar" [style.height.px]="item.height"></div>
+                    <div class="bar" [class]="item.cssClass" [style.height.px]="item.height">
+                    </div>
 
                 </div>
 
@@ -149,7 +151,8 @@
     </div>
 
     <div class="value-grid value-grid-top">
-        <div class="statistics-card value-card">
+
+        <div class="statistics-card value-card value-purchase">
             <span class="statistics-label">
                 {{ t('totalPurchaseValue') }}
             </span>
@@ -159,7 +162,7 @@
             </strong>
         </div>
 
-        <div class="statistics-card value-card">
+        <div class="statistics-card value-card value-sold-purchase">
             <span class="statistics-label">
                 {{ t('soldPurchaseValue') }}
             </span>
@@ -168,10 +171,12 @@
                 {{ formatPrice(statistics().soldPurchaseValue) }}
             </strong>
         </div>
+
     </div>
 
     <div class="value-grid value-grid-bottom">
-        <div class="statistics-card value-card">
+
+        <div class="statistics-card value-card value-revenue">
             <span class="statistics-label">
                 {{ t('salesRevenue') }}
             </span>
@@ -181,7 +186,7 @@
             </strong>
         </div>
 
-        <div class="statistics-card value-card">
+        <div class="statistics-card value-card value-profit">
             <span class="statistics-label">
                 {{ t('profit') }}
             </span>
@@ -191,7 +196,7 @@
             </strong>
         </div>
 
-        <div class="statistics-card value-card">
+        <div class="statistics-card value-card value-margin">
             <span class="statistics-label">
                 {{ t('profitMargin') }}
             </span>
@@ -200,6 +205,7 @@
                 {{ formatPercentage(statistics().profitMargin) }}
             </strong>
         </div>
+
     </div>
 
 </div>

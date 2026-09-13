@@ -219,7 +219,8 @@ export class Statistics implements OnInit {
         height:
           stats.draft === 0
             ? 4
-            : (stats.draft / max) * maxBarHeight
+            : (stats.draft / max) * maxBarHeight,
+        cssClass: 'bar-draft'
       },
       {
         label: this.t('statusOnline'),
@@ -227,7 +228,8 @@ export class Statistics implements OnInit {
         height:
           stats.online === 0
             ? 4
-            : (stats.online / max) * maxBarHeight
+            : (stats.online / max) * maxBarHeight,
+        cssClass: 'bar-online'
       },
       {
         label: this.t('statusReserved'),
@@ -235,7 +237,8 @@ export class Statistics implements OnInit {
         height:
           stats.reserved === 0
             ? 4
-            : (stats.reserved / max) * maxBarHeight
+            : (stats.reserved / max) * maxBarHeight,
+        cssClass: 'bar-reserved'
       },
       {
         label: this.t('statusSold'),
@@ -243,7 +246,8 @@ export class Statistics implements OnInit {
         height:
           stats.sold === 0
             ? 4
-            : (stats.sold / max) * maxBarHeight
+            : (stats.sold / max) * maxBarHeight,
+        cssClass: 'bar-sold'
       },
       {
         label: this.t('statusArchived'),
@@ -251,7 +255,8 @@ export class Statistics implements OnInit {
         height:
           stats.archived === 0
             ? 4
-            : (stats.archived / max) * maxBarHeight
+            : (stats.archived / max) * maxBarHeight,
+        cssClass: 'bar-archived'
       }
     ];
   }

@@ -136,5 +136,7 @@
   "recentlySoldSubtitle": "Your latest sales",
   "showAll": "Show all",
   "noSoldArticles": "No sold articles yet.",
-  "dashboardLoadFailed": "The overview could not be loaded."
+  "dashboardLoadFailed": "The overview could not be loaded.",
+  "darkMode": "Dark mode",
+  "lightMode": "Light mode"
 }

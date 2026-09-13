@@ -137,5 +137,7 @@
   "recentlySoldSubtitle": "أحدث عمليات البيع",
   "showAll": "عرض الكل",
   "noSoldArticles": "لا توجد مقالات مباعة حتى الآن.",
-  "dashboardLoadFailed": "تعذر تحميل النظرة العامة."
+  "dashboardLoadFailed": "تعذر تحميل النظرة العامة.",
+  "darkMode": "الوضع الداكن",
+  "lightMode": "الوضع الفاتح"
 }

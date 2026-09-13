@@ -53,6 +53,7 @@
     flex-direction: column;
     gap: 12px;
     padding: 22px;
+
     background: #fff;
     border: 1px solid #e2e2e2;
     border-radius: 12px;
@@ -211,4 +212,85 @@
     .dashboard-list-item {
         align-items: flex-start;
     }
+}
+
+.dashboard-stats {
+    .dashboard-card:nth-child(1) {
+        background: #f5f7ff;
+        border-color: #dfe5ff;
+    }
+
+    .dashboard-card:nth-child(2) {
+        background: #eef6ff;
+        border-color: #cfe4ff;
+
+        strong {
+            color: #1d6fdc;
+        }
+    }
+
+    .dashboard-card:nth-child(3) {
+        background: #eefaf2;
+        border-color: #ccebd5;
+
+        strong {
+            color: #20854a;
+        }
+    }
+}
+
+.dashboard-values {
+    .dashboard-card:nth-child(1) {
+        background: #f7f3ff;
+        border-color: #e4d8ff;
+
+        strong {
+            color: #7147c9;
+        }
+    }
+
+    .dashboard-card:nth-child(2) {
+        background: #eefaf2;
+        border-color: #ccebd5;
+
+        strong {
+            color: #20854a;
+        }
+    }
+}
+
+.status-badge {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 999px;
+
+    background: #f0f0f0;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-online {
+    background: #e9f3ff;
+    color: #1d6fdc;
+}
+
+.status-sold {
+    background: #eaf8ef;
+    color: #20854a;
+}
+
+.status-draft {
+    background: #f2f2f2;
+    color: #555;
+}
+
+.status-reserved {
+    background: #fff5df;
+    color: #a76800;
+}
+
+.status-archived {
+    background: #eeeef3;
+    color: #666;
 }

@@ -24,18 +24,24 @@
     gap: 12px;
     padding: 24px;
 
-    background: #fff;
+    background: var(--surface);
 
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--border);
     border-radius: 12px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .statistics-label {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 .statistics-value {
+    color: var(--text-primary);
+
     font-size: 32px;
     line-height: 1;
 }
@@ -96,9 +102,9 @@
     margin-top: 32px;
     padding: 24px;
 
-    background: #fff;
+    background: var(--surface);
 
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -108,14 +114,28 @@
     h2 {
         margin: 0 0 6px;
         font-size: 20px;
+
+        color: var(--text-primary);
     }
 
     p {
         margin: 0;
 
-        color: #777;
+        color: var(--text-secondary);
         font-size: 14px;
     }
+}
+
+.bar-value {
+    color: var(--text-primary);
+}
+
+.bar-label {
+    color: var(--text-secondary);
+}
+
+.bar-area {
+    border-bottom-color: var(--border);
 }
 
 .chart {
@@ -143,7 +163,7 @@
     width: 100%;
     height: 190px;
 
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border);
 }
 
 .bar-container {
@@ -155,32 +175,15 @@
     height: 100%;
 }
 
-.bar-value {
-    margin-bottom: 8px;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    color: #222;
-}
 
 .bar {
     width: 52px;
 
-    background: #222;
+    background: var(--text-primary);
 
     border-radius: 8px 8px 0 0;
 
     transition: height 0.3s ease;
-}
-
-.bar-label {
-    margin-top: 12px;
-
-    text-align: center;
-
-    color: #666;
-    font-size: 13px;
 }
 
 @media (max-width: 900px) {
@@ -213,4 +216,118 @@
     .value-grid-bottom {
         grid-template-columns: 1fr;
     }
+}
+
+/* Status-Karten */
+
+.statistics-total {
+    background: #f5f7ff;
+    border-color: #dfe5ff;
+}
+
+.statistics-draft {
+    background: #f3f3f3;
+    border-color: #dedede;
+
+    .statistics-value {
+        color: #555;
+    }
+}
+
+.statistics-online {
+    background: #eef6ff;
+    border-color: #cfe4ff;
+
+    .statistics-value {
+        color: #1d6fdc;
+    }
+}
+
+.statistics-reserved {
+    background: #fff7e8;
+    border-color: #f3ddb2;
+
+    .statistics-value {
+        color: #a76800;
+    }
+}
+
+.statistics-sold {
+    background: #eefaf2;
+    border-color: #ccebd5;
+
+    .statistics-value {
+        color: #20854a;
+    }
+}
+
+.statistics-archived {
+    background: #f3f1f8;
+    border-color: #ddd7ea;
+
+    .statistics-value {
+        color: #6b5b8a;
+    }
+}
+
+
+/* Finanz-Karten */
+
+.value-purchase {
+    background: #f7f7f7;
+}
+
+.value-sold-purchase {
+    background: #fff8ed;
+    border-color: #f1dfbd;
+}
+
+.value-revenue {
+    background: #f7f3ff;
+    border-color: #e4d8ff;
+
+    .statistics-value {
+        color: #7147c9;
+    }
+}
+
+.value-profit {
+    background: #eefaf2;
+    border-color: #ccebd5;
+
+    .statistics-value {
+        color: #20854a;
+    }
+}
+
+.value-margin {
+    background: #eef6ff;
+    border-color: #cfe4ff;
+
+    .statistics-value {
+        color: #1d6fdc;
+    }
+}
+
+
+/* Diagramm-Farben */
+
+.bar-draft {
+    background: #888;
+}
+
+.bar-online {
+    background: #1d6fdc;
+}
+
+.bar-reserved {
+    background: #d99013;
+}
+
+.bar-sold {
+    background: #20854a;
+}
+
+.bar-archived {
+    background: #6b5b8a;
 }
