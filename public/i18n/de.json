@@ -107,5 +107,6 @@
   "salePrice": "Verkaufspreis",
   "salePricePlaceholder": "z. B. 29,99 €",
   "salesRevenue": "Umsatz",
-  "profit": "Gewinn"
+  "profit": "Gewinn",
+  "profitMargin": "Gewinnmarge"
 }

@@ -15,6 +15,8 @@ type ArticleStatistics = {
 
   salesRevenue: number;
   profit: number;
+
+  profitMargin: number;
 };
 
 @Component({
@@ -40,7 +42,8 @@ export class Statistics implements OnInit {
     soldPurchaseValue: 0,
 
     salesRevenue: 0,
-    profit: 0
+    profit: 0,
+    profitMargin: 0
   });
 
   constructor(
@@ -108,6 +111,11 @@ export class Statistics implements OnInit {
     const profit =
       salesRevenue - soldPurchaseValue;
 
+    const profitMargin =
+      salesRevenue > 0
+        ? (profit / salesRevenue) * 100
+        : 0;
+
     this.statistics.set({
       total: articles.length,
 
@@ -132,7 +140,8 @@ export class Statistics implements OnInit {
       totalPurchaseValue,
       soldPurchaseValue,
       salesRevenue,
-      profit
+      profit,
+      profitMargin
     });
 
     this.loading.set(false);
@@ -157,8 +166,28 @@ export class Statistics implements OnInit {
 
     return new Intl.NumberFormat(locale, {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'EUR',
     }).format(cents / 100);
+  }
+
+  formatPercentage(value: number): string {
+    const localeMap = {
+      de: 'de-DE',
+      en: 'en-GB',
+      ar: 'ar-SA'
+    };
+
+    const language =
+      this.translationService.language();
+
+    const locale =
+      localeMap[language];
+
+    return new Intl.NumberFormat(locale, {
+      style: 'percent',
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    }).format(value / 100);
   }
 
   statusChartData() {

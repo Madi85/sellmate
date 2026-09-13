@@ -148,8 +148,29 @@
 
     </div>
 
-    <div class="value-grid">
+    <div class="value-grid value-grid-top">
+        <div class="statistics-card value-card">
+            <span class="statistics-label">
+                {{ t('totalPurchaseValue') }}
+            </span>
 
+            <strong class="statistics-value">
+                {{ formatPrice(statistics().totalPurchaseValue) }}
+            </strong>
+        </div>
+
+        <div class="statistics-card value-card">
+            <span class="statistics-label">
+                {{ t('soldPurchaseValue') }}
+            </span>
+
+            <strong class="statistics-value">
+                {{ formatPrice(statistics().soldPurchaseValue) }}
+            </strong>
+        </div>
+    </div>
+
+    <div class="value-grid value-grid-bottom">
         <div class="statistics-card value-card">
             <span class="statistics-label">
                 {{ t('salesRevenue') }}
@@ -170,6 +191,15 @@
             </strong>
         </div>
 
+        <div class="statistics-card value-card">
+            <span class="statistics-label">
+                {{ t('profitMargin') }}
+            </span>
+
+            <strong class="statistics-value">
+                {{ formatPercentage(statistics().profitMargin) }}
+            </strong>
+        </div>
     </div>
 
 </div>
